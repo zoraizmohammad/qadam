@@ -1,0 +1,32 @@
+# OS / editor
+.DS_Store
+Thumbs.db
+*.swp
+.idea/
+.vscode/
+
+# Node (fitting app / tooling, future)
+node_modules/
+npm-debug.log*
+yarn-error.log*
+dist/
+build/
+.cache/
+
+# Python (fidelity study tooling, future)
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+
+# Data — keep large/clinical scan data out of git
+*.stl
+*.ply
+*.obj
+/data/
+/scans/
+
+# Secrets
+.env
+.env.*
