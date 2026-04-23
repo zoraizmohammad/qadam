@@ -4,62 +4,119 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Qadam — Open-Source Frontier Lab for Accessible Prosthetics</title>
-<meta name="description" content="Qadam is an open-source frontier research lab building affordable, field-deployable prosthetic and medical technology for the world's underserved." />
+<meta name="description" content="Qadam is an open-source frontier research lab building affordable, field-deployable prosthetic and medical technology for the world's underserved. We move the intelligence into software and make the hardware dumb, cheap, and unbreakable." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 <style>
 :root{
-  --bg:#05070d;--bg-2:#080b14;--panel:#0c111d;--line:#1b2436;
-  --txt:#e8edf7;--txt-dim:#9aa6bd;--txt-faint:#5d6982;
-  --accent:#39f5c8;--accent-2:#5b8cff;--accent-3:#b07bff;
-  --glow:0 0 40px rgba(57,245,200,.25);--maxw:1180px;--ease:cubic-bezier(.16,1,.3,1);
+  --bg:#05070d;
+  --bg-2:#080b14;
+  --panel:#0c111d;
+  --panel-2:#10162492;
+  --line:#1b2436;
+  --txt:#e8edf7;
+  --txt-dim:#9aa6bd;
+  --txt-faint:#5d6982;
+  --accent:#39f5c8;      /* signal teal */
+  --accent-2:#5b8cff;    /* deep blue */
+  --accent-3:#b07bff;    /* violet */
+  --warn:#ffcf6b;
+  --glow:0 0 40px rgba(57,245,200,.25);
+  --maxw:1180px;
+  --ease:cubic-bezier(.16,1,.3,1);
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--txt);font-family:'Inter',system-ui,sans-serif;font-weight:300;line-height:1.65;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+body{
+  background:var(--bg);
+  color:var(--txt);
+  font-family:'Inter',system-ui,sans-serif;
+  font-weight:300;
+  line-height:1.65;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
 ::selection{background:var(--accent);color:#021;}
-h1,h2,h3,h4{font-family:'Space Grotesk',sans-serif;font-weight:600;line-height:1.1;letter-spacing:-.01em;}
+h1,h2,h3,h4,.mono-label{font-family:'Space Grotesk',sans-serif;font-weight:600;line-height:1.1;letter-spacing:-.01em;}
+.mono{font-family:'JetBrains Mono',monospace;}
 a{color:inherit;text-decoration:none}
+img{max-width:100%}
 .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px;}
 section{position:relative;padding:120px 0;}
+
+/* ---------- background field ---------- */
 #bg-canvas{position:fixed;inset:0;z-index:0;opacity:.55;pointer-events:none;}
-.bg-grad{position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(900px 600px at 75% -5%, rgba(91,140,255,.18), transparent 60%),radial-gradient(800px 700px at 10% 15%, rgba(57,245,200,.10), transparent 55%);}
+.bg-grad{position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(900px 600px at 75% -5%, rgba(91,140,255,.18), transparent 60%),
+    radial-gradient(800px 700px at 10% 15%, rgba(57,245,200,.10), transparent 55%),
+    radial-gradient(900px 900px at 90% 100%, rgba(176,123,255,.10), transparent 55%);
+}
+.noise{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.035;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}
 main,nav,footer{position:relative;z-index:2;}
-#progress{position:fixed;top:0;left:0;height:2px;width:0;z-index:60;background:linear-gradient(90deg,var(--accent),var(--accent-2),var(--accent-3));box-shadow:0 0 12px var(--accent);}
-nav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:18px 28px;transition:all .4s var(--ease);border-bottom:1px solid transparent;}
+
+/* ---------- scroll progress ---------- */
+#progress{position:fixed;top:0;left:0;height:2px;width:0;z-index:60;
+  background:linear-gradient(90deg,var(--accent),var(--accent-2),var(--accent-3));box-shadow:0 0 12px var(--accent);}
+
+/* ---------- nav ---------- */
+nav{position:fixed;top:0;left:0;right:0;z-index:50;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:18px 28px;transition:all .4s var(--ease);
+  border-bottom:1px solid transparent;}
 nav.scrolled{background:rgba(5,7,13,.72);backdrop-filter:blur(14px);border-bottom:1px solid var(--line);padding:13px 28px;}
 .brand{display:flex;align-items:center;gap:11px;font-family:'Space Grotesk';font-weight:700;font-size:19px;letter-spacing:.02em;}
-.brand .mark{width:26px;height:26px;display:inline-block;}
+.brand .mark{width:26px;height:26px;position:relative;display:inline-block;}
 .brand .mark svg{width:100%;height:100%;filter:drop-shadow(0 0 6px rgba(57,245,200,.6));}
+.brand .tag{font-family:'JetBrains Mono';font-size:9.5px;font-weight:400;color:var(--accent);
+  border:1px solid var(--line);padding:2px 6px;border-radius:5px;letter-spacing:.08em;margin-left:4px;}
 .nav-links{display:flex;gap:30px;align-items:center;font-size:14px;color:var(--txt-dim);font-weight:400;}
+.nav-links a{transition:color .25s;position:relative;}
 .nav-links a:hover{color:var(--txt);}
-.btn{display:inline-flex;align-items:center;gap:8px;font-family:'Space Grotesk';font-weight:500;font-size:14px;padding:11px 20px;border-radius:9px;cursor:pointer;border:1px solid var(--line);transition:all .3s var(--ease);}
+.nav-links a::after{content:'';position:absolute;left:0;bottom:-5px;height:1px;width:0;background:var(--accent);transition:width .3s var(--ease);}
+.nav-links a:hover::after{width:100%;}
+.btn{display:inline-flex;align-items:center;gap:8px;font-family:'Space Grotesk';font-weight:500;font-size:14px;
+  padding:11px 20px;border-radius:9px;cursor:pointer;border:1px solid var(--line);transition:all .3s var(--ease);}
 .btn-primary{background:var(--accent);color:#021510;border-color:var(--accent);box-shadow:var(--glow);}
-.btn-primary:hover{transform:translateY(-2px);}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 0 50px rgba(57,245,200,.45);}
 .btn-ghost{background:rgba(255,255,255,.02);color:var(--txt);}
-.btn-ghost:hover{border-color:var(--accent);color:var(--accent);}
+.btn-ghost:hover{border-color:var(--accent);color:var(--accent);background:rgba(57,245,200,.05);}
+.nav-cta{display:flex;gap:12px;align-items:center;}
+
+/* ---------- hero ---------- */
 #hero{min-height:100vh;display:flex;align-items:center;padding-top:90px;}
-.eyebrow{display:inline-flex;align-items:center;gap:10px;font-family:'JetBrains Mono';font-size:12px;letter-spacing:.12em;color:var(--accent);text-transform:uppercase;border:1px solid var(--line);border-radius:30px;padding:7px 15px;margin-bottom:30px;}
+.eyebrow{display:inline-flex;align-items:center;gap:10px;font-family:'JetBrains Mono';font-size:12px;letter-spacing:.12em;
+  color:var(--accent);text-transform:uppercase;border:1px solid var(--line);border-radius:30px;padding:7px 15px;
+  background:rgba(57,245,200,.04);margin-bottom:30px;}
 .pulse{width:7px;height:7px;border-radius:50%;background:var(--accent);box-shadow:0 0 10px var(--accent);animation:pulse 2s infinite;}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.7)}}
 #hero h1{font-size:clamp(40px,7vw,82px);font-weight:700;letter-spacing:-.025em;margin-bottom:26px;line-height:1.02;}
 #hero h1 .grad{background:linear-gradient(110deg,var(--accent),var(--accent-2) 55%,var(--accent-3));-webkit-background-clip:text;background-clip:text;color:transparent;}
-.hero-sub{font-size:clamp(17px,2vw,21px);color:var(--txt-dim);max-width:660px;margin-bottom:38px;}
+.hero-sub{font-size:clamp(17px,2vw,21px);color:var(--txt-dim);max-width:660px;font-weight:300;margin-bottom:38px;}
 .hero-sub b{color:var(--txt);font-weight:500;}
 .hero-actions{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:54px;}
 .hero-stats{display:flex;gap:46px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:30px;max-width:760px;}
-.stat .num{font-family:'Space Grotesk';font-size:34px;font-weight:700;background:linear-gradient(120deg,#fff,var(--accent));-webkit-background-clip:text;background-clip:text;color:transparent;}
+.stat .num{font-family:'Space Grotesk';font-size:34px;font-weight:700;
+  background:linear-gradient(120deg,#fff,var(--accent));-webkit-background-clip:text;background-clip:text;color:transparent;}
 .stat .lbl{font-size:13px;color:var(--txt-faint);margin-top:2px;}
+
+/* ---------- section headings ---------- */
 .sec-head{max-width:760px;margin-bottom:64px;}
-.sec-tag{font-family:'JetBrains Mono';font-size:12px;letter-spacing:.14em;color:var(--accent);text-transform:uppercase;margin-bottom:18px;}
-.sec-head h2{font-size:clamp(30px,4.5vw,50px);font-weight:600;margin-bottom:20px;}
-.sec-head p{font-size:18px;color:var(--txt-dim);}
+.sec-tag{font-family:'JetBrains Mono';font-size:12px;letter-spacing:.14em;color:var(--accent);text-transform:uppercase;margin-bottom:18px;display:flex;align-items:center;gap:12px;}
+.sec-tag::before{content:'';width:28px;height:1px;background:var(--accent);}
+.sec-head h2{font-size:clamp(30px,4.5vw,50px);font-weight:600;letter-spacing:-.02em;margin-bottom:20px;}
+.sec-head p{font-size:18px;color:var(--txt-dim);font-weight:300;}
+
+/* ---------- thesis / principles ---------- */
 .thesis{display:grid;grid-template-columns:1.1fr 1fr;gap:60px;align-items:center;}
-.thesis-card{background:linear-gradient(160deg,var(--panel),#070a12);border:1px solid var(--line);border-radius:18px;padding:34px;}
+.thesis-card{background:linear-gradient(160deg,var(--panel),#070a12);border:1px solid var(--line);border-radius:18px;padding:34px;position:relative;overflow:hidden;}
+.thesis-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--accent),transparent);}
 .split-row{display:flex;gap:20px;align-items:flex-start;padding:22px 0;border-bottom:1px solid var(--line);}
 .split-row:last-child{border-bottom:none;}
-.split-icon{flex-shrink:0;width:44px;height:44px;border-radius:11px;display:grid;place-items:center;background:rgba(57,245,200,.08);border:1px solid rgba(57,245,200,.2);font-family:'JetBrains Mono';color:var(--accent);font-size:13px;}
+.split-icon{flex-shrink:0;width:44px;height:44px;border-radius:11px;display:grid;place-items:center;
+  background:rgba(57,245,200,.08);border:1px solid rgba(57,245,200,.2);font-family:'JetBrains Mono';color:var(--accent);font-size:13px;}
 .split-row h4{font-size:16.5px;margin-bottom:5px;}
 .split-row p{font-size:14.5px;color:var(--txt-dim);}
 .eq{display:flex;flex-direction:column;gap:18px;}
@@ -68,91 +125,645 @@ nav.scrolled{background:rgba(5,7,13,.72);backdrop-filter:blur(14px);border-botto
 .eq-chip.dumb{color:var(--txt-faint);}
 .eq-chip.smart{color:var(--accent);border-color:rgba(57,245,200,.3);box-shadow:var(--glow);}
 .eq-op{color:var(--accent-2);font-size:24px;}
-footer{border-top:1px solid var(--line);padding:50px 0;text-align:center;}
-footer p{font-size:13px;color:var(--txt-faint);}
+
+/* ---------- principles marquee ---------- */
+.marquee{overflow:hidden;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:22px 0;margin-top:80px;-webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);}
+.marquee-track{display:flex;gap:54px;width:max-content;animation:scrollx 38s linear infinite;}
+.marquee-track span{font-family:'Space Grotesk';font-size:17px;color:var(--txt-faint);display:flex;align-items:center;gap:54px;white-space:nowrap;}
+.marquee-track span::before{content:'◆';color:var(--accent);font-size:9px;}
+@keyframes scrollx{to{transform:translateX(-50%)}}
+
+/* ---------- device ---------- */
+.device-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;}
+.device-vis{position:relative;aspect-ratio:1/1;border:1px solid var(--line);border-radius:20px;
+  background:radial-gradient(circle at 50% 40%,rgba(57,245,200,.06),transparent 60%),var(--bg-2);
+  display:grid;place-items:center;overflow:hidden;}
+.device-vis::after{content:'';position:absolute;inset:0;background:linear-gradient(transparent 49%,rgba(57,245,200,.05) 50%,transparent 51%);background-size:100% 9px;pointer-events:none;animation:scan 6s linear infinite;}
+@keyframes scan{to{background-position:0 100%}}
+.spec-list{display:flex;flex-direction:column;gap:2px;}
+.spec{padding:20px 4px;border-bottom:1px solid var(--line);cursor:default;transition:all .3s var(--ease);display:flex;gap:18px;}
+.spec:hover{padding-left:14px;border-color:rgba(57,245,200,.3);}
+.spec .n{font-family:'JetBrains Mono';font-size:13px;color:var(--accent);padding-top:3px;}
+.spec h4{font-size:18px;margin-bottom:6px;}
+.spec p{font-size:14.5px;color:var(--txt-dim);}
+.device-pill{position:absolute;font-family:'JetBrains Mono';font-size:11px;padding:5px 10px;border-radius:7px;
+  background:rgba(8,11,20,.85);border:1px solid var(--line);color:var(--txt-dim);backdrop-filter:blur(4px);
+  opacity:0;transition:opacity .5s,transform .5s;}
+.device-vis:hover .device-pill{opacity:1;}
+.dp1{top:14%;left:8%;transition-delay:.05s}.dp2{top:30%;right:6%;transition-delay:.15s}
+.dp3{bottom:24%;left:6%;transition-delay:.25s}.dp4{bottom:12%;right:12%;transition-delay:.35s}
+
+/* ---------- loop / process ---------- */
+.loop{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;}
+.loop-step{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:26px 22px;position:relative;transition:all .35s var(--ease);}
+.loop-step:hover{transform:translateY(-6px);border-color:rgba(57,245,200,.35);box-shadow:0 24px 50px -30px rgba(57,245,200,.4);}
+.loop-step .step-n{font-family:'JetBrains Mono';font-size:12px;color:var(--accent-2);margin-bottom:14px;}
+.loop-step h4{font-size:18px;margin-bottom:10px;}
+.loop-step p{font-size:14px;color:var(--txt-dim);}
+.loop-step .arrow{position:absolute;right:-13px;top:50%;transform:translateY(-50%);color:var(--accent);font-size:18px;z-index:3;}
+.loop-step:last-child .arrow{display:none;}
+.loop-step.offgrid{border-color:rgba(57,245,200,.25);}
+.badge{display:inline-block;font-family:'JetBrains Mono';font-size:9.5px;letter-spacing:.06em;padding:3px 8px;border-radius:20px;margin-top:14px;}
+.badge.green{background:rgba(57,245,200,.1);color:var(--accent);border:1px solid rgba(57,245,200,.25);}
+.badge.power{background:rgba(255,207,107,.1);color:var(--warn);border:1px solid rgba(255,207,107,.25);}
+
+/* ---------- research ---------- */
+.research-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+.rcard{background:linear-gradient(170deg,var(--panel),#070a12);border:1px solid var(--line);border-radius:16px;padding:28px;transition:all .4s var(--ease);position:relative;overflow:hidden;}
+.rcard:hover{transform:translateY(-5px);border-color:rgba(91,140,255,.4);}
+.rcard .glowline{position:absolute;top:0;left:-100%;width:100%;height:1px;background:linear-gradient(90deg,transparent,var(--accent-2),transparent);transition:left .6s var(--ease);}
+.rcard:hover .glowline{left:100%;}
+.rcard .rnum{font-family:'JetBrains Mono';font-size:12px;color:var(--txt-faint);margin-bottom:16px;}
+.rcard h4{font-size:18.5px;margin-bottom:11px;}
+.rcard p{font-size:14.5px;color:var(--txt-dim);}
+.rcard .rtag{display:inline-block;margin-top:16px;font-family:'JetBrains Mono';font-size:10px;letter-spacing:.05em;
+  color:var(--accent-3);border:1px solid rgba(176,123,255,.25);background:rgba(176,123,255,.06);padding:4px 9px;border-radius:6px;}
+.rcard.flag{border-color:rgba(255,207,107,.25);}
+.rcard.flag .rtag{color:var(--warn);border-color:rgba(255,207,107,.3);background:rgba(255,207,107,.07);}
+
+/* ---------- roadmap ---------- */
+.road-tabs{display:flex;gap:10px;margin-bottom:44px;flex-wrap:wrap;}
+.road-tab{font-family:'Space Grotesk';font-weight:500;font-size:15px;padding:13px 26px;border-radius:11px;cursor:pointer;
+  border:1px solid var(--line);background:var(--panel);color:var(--txt-dim);transition:all .3s var(--ease);}
+.road-tab .v{font-family:'JetBrains Mono';font-size:11px;color:var(--txt-faint);display:block;}
+.road-tab.active{background:linear-gradient(150deg,rgba(57,245,200,.12),rgba(91,140,255,.08));border-color:var(--accent);color:var(--txt);box-shadow:0 0 30px -10px rgba(57,245,200,.5);}
+.road-tab.active .v{color:var(--accent);}
+.road-panel{display:none;animation:fade .6s var(--ease);}
+.road-panel.active{display:block;}
+@keyframes fade{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.road-body{display:grid;grid-template-columns:300px 1fr;gap:50px;}
+.road-meta h3{font-size:30px;margin-bottom:14px;}
+.road-meta .phase{font-family:'JetBrains Mono';font-size:12px;color:var(--accent);letter-spacing:.08em;}
+.road-meta .horizon{font-size:14px;color:var(--txt-faint);margin-top:18px;border-left:2px solid var(--accent);padding-left:14px;}
+.road-meta p{font-size:15px;color:var(--txt-dim);margin-top:18px;}
+.milestones{display:flex;flex-direction:column;}
+.ms{display:flex;gap:20px;padding:20px 0;border-bottom:1px solid var(--line);}
+.ms:last-child{border:none;}
+.ms .dot{flex-shrink:0;width:13px;height:13px;border-radius:50%;border:2px solid var(--accent);margin-top:5px;position:relative;}
+.ms .dot::after{content:'';position:absolute;top:14px;left:50%;transform:translateX(-50%);width:1px;height:48px;background:var(--line);}
+.ms:last-child .dot::after{display:none;}
+.ms h4{font-size:16.5px;margin-bottom:5px;}
+.ms p{font-size:14px;color:var(--txt-dim);}
+
+/* ---------- open source ---------- */
+.os-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;}
+.terminal{background:#06080f;border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:0 30px 70px -40px rgba(0,0,0,.9);}
+.term-bar{display:flex;gap:7px;padding:13px 16px;border-bottom:1px solid var(--line);align-items:center;}
+.term-bar .d{width:11px;height:11px;border-radius:50%;}
+.term-bar .t{margin-left:12px;font-family:'JetBrains Mono';font-size:12px;color:var(--txt-faint);}
+.term-body{padding:22px;font-family:'JetBrains Mono';font-size:13px;line-height:2;}
+.term-body .c{color:var(--txt-faint);}
+.term-body .g{color:var(--accent);}
+.term-body .b{color:var(--accent-2);}
+.term-body .v{color:var(--accent-3);}
+.term-body .w{color:var(--warn);}
+.os-feats{display:flex;flex-direction:column;gap:18px;}
+.os-feat{display:flex;gap:16px;align-items:flex-start;}
+.os-feat .k{flex-shrink:0;width:40px;height:40px;border-radius:10px;display:grid;place-items:center;background:rgba(91,140,255,.08);border:1px solid rgba(91,140,255,.2);color:var(--accent-2);}
+.os-feat h4{font-size:16.5px;margin-bottom:3px;}
+.os-feat p{font-size:14px;color:var(--txt-dim);}
+
+/* ---------- risk / honesty ---------- */
+.risk{background:linear-gradient(150deg,rgba(255,207,107,.05),transparent);border:1px solid rgba(255,207,107,.2);border-radius:18px;padding:40px;display:flex;gap:26px;align-items:flex-start;}
+.risk .ricon{flex-shrink:0;width:50px;height:50px;border-radius:12px;display:grid;place-items:center;background:rgba(255,207,107,.1);border:1px solid rgba(255,207,107,.3);}
+.risk h3{font-size:22px;margin-bottom:12px;color:var(--warn);}
+.risk p{font-size:15.5px;color:var(--txt-dim);max-width:760px;}
+
+/* ---------- get involved ---------- */
+.cta-box{background:linear-gradient(150deg,var(--panel),#06080f);border:1px solid var(--line);border-radius:24px;padding:64px;text-align:center;position:relative;overflow:hidden;}
+.cta-box::before{content:'';position:absolute;inset:0;background:radial-gradient(600px 300px at 50% 0,rgba(57,245,200,.12),transparent 70%);}
+.cta-box h2{font-size:clamp(28px,4vw,44px);margin-bottom:18px;position:relative;}
+.cta-box p{font-size:18px;color:var(--txt-dim);max-width:580px;margin:0 auto 34px;position:relative;}
+.cta-actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;position:relative;}
+.role-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:54px;}
+.role{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:24px;text-align:left;transition:all .3s var(--ease);}
+.role:hover{border-color:rgba(57,245,200,.35);transform:translateY(-4px);}
+.role h4{font-size:16px;margin-bottom:8px;display:flex;align-items:center;gap:8px;}
+.role p{font-size:13.5px;color:var(--txt-dim);}
+
+/* ---------- footer ---------- */
+footer{border-top:1px solid var(--line);padding:60px 0 40px;}
+.foot-grid{display:flex;justify-content:space-between;flex-wrap:wrap;gap:40px;margin-bottom:44px;}
+.foot-brand{max-width:320px;}
+.foot-brand p{font-size:14px;color:var(--txt-dim);margin-top:16px;}
+.foot-cols{display:flex;gap:64px;flex-wrap:wrap;}
+.foot-col h5{font-family:'JetBrains Mono';font-size:11px;letter-spacing:.1em;color:var(--txt-faint);text-transform:uppercase;margin-bottom:16px;}
+.foot-col a{display:block;font-size:14px;color:var(--txt-dim);margin-bottom:10px;transition:color .2s;}
+.foot-col a:hover{color:var(--accent);}
+.foot-bottom{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;border-top:1px solid var(--line);padding-top:28px;}
+.foot-bottom p{font-size:13px;color:var(--txt-faint);}
+.foot-note{font-family:'JetBrains Mono';font-size:11px;color:var(--txt-faint);border:1px solid var(--line);padding:6px 12px;border-radius:7px;}
+
+/* ---------- reveal animation ---------- */
 .reveal{opacity:0;transform:translateY(34px);transition:opacity .9s var(--ease),transform .9s var(--ease);}
 .reveal.in{opacity:1;transform:none;}
-.reveal.d1{transition-delay:.08s}.reveal.d2{transition-delay:.16s}.reveal.d3{transition-delay:.24s}.reveal.d4{transition-delay:.32s}
-@media(max-width:920px){.nav-links{display:none}.thesis{grid-template-columns:1fr;gap:40px}}
+.reveal.d1{transition-delay:.08s}.reveal.d2{transition-delay:.16s}.reveal.d3{transition-delay:.24s}.reveal.d4{transition-delay:.32s}.reveal.d5{transition-delay:.40s}.reveal.d6{transition-delay:.48s}
+
+/* ---------- responsive ---------- */
+@media(max-width:920px){
+  .nav-links{display:none}
+  .thesis,.device-grid,.os-grid{grid-template-columns:1fr;gap:40px}
+  .research-grid{grid-template-columns:1fr 1fr}
+  .loop{grid-template-columns:1fr 1fr}
+  .loop-step .arrow{display:none}
+  .road-body{grid-template-columns:1fr;gap:30px}
+  .role-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:600px){
+  section{padding:80px 0}
+  .research-grid,.loop,.role-grid{grid-template-columns:1fr}
+  .cta-box{padding:36px 24px}
+  .nav-cta .btn-ghost{display:none}
+  .hero-stats{gap:28px}
+}
 </style>
 </head>
 <body>
+
 <canvas id="bg-canvas"></canvas>
 <div class="bg-grad"></div>
+<div class="noise"></div>
 <div id="progress"></div>
 
+<!-- NAV -->
 <nav id="nav">
   <a href="#hero" class="brand">
-    <span class="mark"><svg viewBox="0 0 32 32" fill="none"><path d="M16 2 L28 9 V23 L16 30 L4 23 V9 Z" stroke="#39f5c8" stroke-width="1.5"/><path d="M16 9 V23 M10 12 L16 16 L22 12 M10 20 L16 16 L22 20" stroke="#5b8cff" stroke-width="1.3"/></svg></span>
-    Qadam
+    <span class="mark">
+      <svg viewBox="0 0 32 32" fill="none">
+        <path d="M16 2 L28 9 V23 L16 30 L4 23 V9 Z" stroke="#39f5c8" stroke-width="1.5"/>
+        <path d="M16 9 V23 M10 12 L16 16 L22 12 M10 20 L16 16 L22 20" stroke="#5b8cff" stroke-width="1.3"/>
+      </svg>
+    </span>
+    Qadam <span class="tag">open hardware</span>
   </a>
   <div class="nav-links">
     <a href="#thesis">Thesis</a>
-    <a href="#thesis">The Device</a>
-    <a href="#thesis">Roadmap</a>
+    <a href="#device">The Device</a>
+    <a href="#research">Research</a>
+    <a href="#roadmap">Roadmap</a>
+    <a href="#opensource">Open Source</a>
   </div>
-  <a href="#thesis" class="btn btn-primary">Get involved →</a>
+  <div class="nav-cta">
+    <a href="#opensource" class="btn btn-ghost">View the work</a>
+    <a href="#involved" class="btn btn-primary">Get involved →</a>
+  </div>
 </nav>
 
 <main>
+
+<!-- HERO -->
 <section id="hero">
   <div class="wrap">
     <div class="eyebrow reveal"><span class="pulse"></span> Open-source frontier lab · prosthetics &amp; accessible medical tech</div>
     <h1 class="reveal d1">A prosthetic limb<br/>for <span class="grad">everyone left out.</span></h1>
     <p class="hero-sub reveal d2">Qadam is a non-profit research lab building <b>affordable, field-deployable</b> prosthetic and medical technology for refugees and the world's underserved. Our core move: put the intelligence in software, and make the hardware <b>dumb, cheap, and nearly unbreakable.</b></p>
     <div class="hero-actions reveal d3">
-      <a href="#thesis" class="btn btn-primary">Explore the project →</a>
+      <a href="#device" class="btn btn-primary">Explore the device →</a>
+      <a href="#research" class="btn btn-ghost">Read the research agenda</a>
     </div>
     <div class="hero-stats reveal d4">
       <div class="stat"><div class="num" data-target="65">0</div><div class="lbl">million people need a prosthetic or orthotic device</div></div>
       <div class="stat"><div class="num" data-target="10" data-suffix="%">0</div><div class="lbl">of them have access to one today</div></div>
+      <div class="stat"><div class="num" data-prefix="~$" data-target="50">0</div><div class="lbl">target consumable cost per fitted socket</div></div>
       <div class="stat"><div class="num">100%</div><div class="lbl">open hardware &amp; open methods</div></div>
     </div>
   </div>
 </section>
 
+<!-- THESIS -->
 <section id="thesis">
   <div class="wrap">
     <div class="sec-head reveal">
       <div class="sec-tag">01 — The thesis</div>
       <h2>Move the intelligence into software. Make the hardware dumb.</h2>
-      <p>The reason high-tech prosthetics don't reach a refugee camp isn't the limb — it's everything around it: the clinician, the lab, the power, the supply chain. Qadam's architecture attacks that.</p>
+      <p>The reason high-tech prosthetics don't reach a refugee camp isn't the limb — it's everything around it: the clinician, the lab, the power, the supply chain. Qadam's architecture attacks that. Every smart, fragile, expensive component lives in a phone you already own. What we ship to the field is cheap, rugged, and reusable.</p>
     </div>
     <div class="thesis">
       <div class="eq reveal">
         <div class="eq-line"><span class="eq-chip smart">Smartphone app</span><span class="eq-op">+</span><span class="eq-chip dumb">dumb hardware</span></div>
-        <div class="eq-line"><span class="eq-chip dumb">Reusable former</span><span class="eq-op">+</span><span class="eq-chip smart">cheap consumable</span></div>
+        <div class="eq-line" style="font-size:16px;color:var(--txt-dim);font-weight:300;padding-left:4px;">All scanning, computation, fit-checking and guidance run on a device the user already carries. The tool in the tent has no electronics to break, no firmware to update, and nothing to calibrate against a cloud.</div>
+        <div class="eq-line" style="margin-top:8px;"><span class="eq-chip dumb">Reusable former</span><span class="eq-op">+</span><span class="eq-chip smart">cheap consumable</span></div>
+        <div class="eq-line" style="font-size:16px;color:var(--txt-dim);font-weight:300;padding-left:4px;">One durable, reconfigurable tool serves hundreds of patients. The only per-patient cost is a sheet of thermoplastic. That durables/consumables split is the economic engine of the entire project.</div>
       </div>
       <div class="thesis-card reveal d2">
-        <div class="split-row"><div class="split-icon">01</div><div><h4>Manual, digitally-guided</h4><p>The app computes the target shape; a technician dials it in by hand. No motors, no power needed to shape a limb.</p></div></div>
-        <div class="split-row"><div class="split-icon">02</div><div><h4>Off-grid trial fit</h4><p>A low-temp plastic check socket forms in boiling water in minutes — verify fit before committing.</p></div></div>
-        <div class="split-row"><div class="split-icon">03</div><div><h4>Clinician in the loop</h4><p>A certified prosthetist sets the accuracy targets the software enforces.</p></div></div>
+        <div class="split-row">
+          <div class="split-icon">01</div>
+          <div><h4>Manual, digitally-guided</h4><p>The app computes the target shape and prints the settings; a technician dials them in by hand. No motors, no actuators, no power needed to shape a limb.</p></div>
+        </div>
+        <div class="split-row">
+          <div class="split-icon">02</div>
+          <div><h4>Off-grid trial fit</h4><p>A low-temp plastic check socket forms in boiling water in minutes — letting a non-expert verify fit and iterate before committing the definitive socket.</p></div>
+        </div>
+        <div class="split-row">
+          <div class="split-icon">03</div>
+          <div><h4>Clinician in the loop, remotely</h4><p>A certified prosthetist sets the accuracy targets and red-flag criteria the software enforces — so expertise scales without a specialist in every tent.</p></div>
+        </div>
+      </div>
+    </div>
+    <div class="marquee reveal">
+      <div class="marquee-track">
+        <span>Open hardware</span><span>Field-first design</span><span>Durables &amp; consumables</span><span>No power, no problem</span><span>Clinically gated</span><span>Repairable anywhere</span>
+        <span>Open hardware</span><span>Field-first design</span><span>Durables &amp; consumables</span><span>No power, no problem</span><span>Clinically gated</span><span>Repairable anywhere</span>
       </div>
     </div>
   </div>
 </section>
+
+<!-- DEVICE -->
+<section id="device">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="sec-tag">02 — Flagship device</div>
+      <h2>The reconfigurable socket mold-former</h2>
+      <p>The socket — the cup that joins limb to prosthetic — is the make-or-break interface. Get it wrong and the patient gets skin breakdown and abandons the device. Our former is a single reusable tool that takes a digital limb model and physically reshapes itself into the mold for a perfectly rectified socket.</p>
+    </div>
+    <div class="device-grid">
+      <div class="device-vis reveal" id="staveVis">
+        <svg viewBox="0 0 320 320" width="84%" id="staveSvg">
+          <defs>
+            <linearGradient id="lg" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#39f5c8"/><stop offset="1" stop-color="#5b8cff"/>
+            </linearGradient>
+          </defs>
+          <ellipse cx="160" cy="40" rx="90" ry="20" fill="none" stroke="#1b2436" stroke-width="1.5"/>
+          <ellipse cx="160" cy="280" rx="55" ry="13" fill="none" stroke="#1b2436" stroke-width="1.5"/>
+          <g id="staves"></g>
+          <ellipse cx="160" cy="40" rx="90" ry="20" fill="none" stroke="url(#lg)" stroke-width="2" opacity=".9"/>
+        </svg>
+        <div class="device-pill dp1">membrane skin</div>
+        <div class="device-pill dp2">~30–50 hand-set controls</div>
+        <div class="device-pill dp3">flexible staves</div>
+        <div class="device-pill dp4">app-printed target settings</div>
+      </div>
+      <div class="spec-list reveal d2">
+        <div class="spec"><span class="n">A</span><div><h4>Reduced-DOF staves, not a pin array</h4><p>A handful of flexible longitudinal staves with a membrane stretched over them — clustered where rectification gradients are steepest. Limbs are smooth, so ~30–50 hand-set controls capture the geometry that hundreds of actuated pins would, at a fraction of the cost and failure surface.</p></div></div>
+        <div class="spec"><span class="n">B</span><div><h4>Drape-and-wrap forming</h4><p>Modest external compression over a heated sheet, instead of full vacuum. It sidesteps membrane sag, the sealing problem, and venting through the skin — the topology's real engineering trap.</p></div></div>
+        <div class="spec"><span class="n">C</span><div><h4>Designed-in recalibration</h4><p>A documented re-zero procedure and a physical reference master the technician periodically forms against. Backlash and zero-drift are treated as a maintenance reality, not an afterthought.</p></div></div>
+        <div class="spec"><span class="n">D</span><div><h4>Dumb by design</h4><p>No electronics in the tool itself. Nothing to brick, no battery, no firmware. Field-repairable with basic parts.</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- THE LOOP -->
+<section id="loop" style="padding-top:0;">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="sec-tag">03 — The fitting loop</div>
+      <h2>From scan to fitted socket — without a prosthetist in the tent</h2>
+      <p>The check-socket loop is the cleverest part of the system: a fast, transparent, off-grid trial that lets the rectification be iterated before any definitive socket is committed.</p>
+    </div>
+    <div class="loop">
+      <div class="loop-step offgrid reveal d1">
+        <div class="step-n">STEP 01</div><h4>Scan</h4>
+        <p>Phone camera captures the residual limb. The app builds a 3D model and computes the rectified target shape.</p>
+        <span class="badge green">phone only</span>
+        <span class="arrow">→</span>
+      </div>
+      <div class="loop-step offgrid reveal d2">
+        <div class="step-n">STEP 02</div><h4>Form check socket</h4>
+        <p>Set the former to target. Drape low-temp PCL plastic (forms in boiling water) for a clear trial socket in minutes.</p>
+        <span class="badge green">off-grid</span>
+        <span class="arrow">→</span>
+      </div>
+      <div class="loop-step offgrid reveal d3">
+        <div class="step-n">STEP 03</div><h4>Verify &amp; iterate</h4>
+        <p>Pressure-sensing sleeve checks the fit against clinical thresholds. Adjust rectification, re-form, repeat — until it's right.</p>
+        <span class="badge green">off-grid</span>
+        <span class="arrow">→</span>
+      </div>
+      <div class="loop-step reveal d4">
+        <div class="step-n">STEP 04</div><h4>Form definitive socket</h4>
+        <p>With the fit confirmed, form the load-bearing polypropylene socket. This step needs heat (150–180&nbsp;°C) — a heat gun or oven, i.e. power.</p>
+        <span class="badge power">needs power</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESEARCH -->
+<section id="research">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="sec-tag">04 — Research agenda</div>
+      <h2>The open questions we're answering first</h2>
+      <p>Frontier engineering means being honest about what's unproven. These are the load-bearing assumptions — ranked by how likely they are to kill the concept — that our research program is built to settle before any hardware is cut or any human is fitted.</p>
+    </div>
+    <div class="research-grid">
+      <div class="rcard reveal d1"><div class="glowline"></div>
+        <div class="rnum">R-01 · highest leverage</div>
+        <h4>Software fidelity study</h4>
+        <p>Before any metal: sample real rectified transtibial scans as N stave curves, loft a surface, smooth between staves to model the membrane, and compute a surface-error heat-map. Answers — for free, on a laptop — whether the topology can even hit a millimeter-class target, how many staves it takes, and where they go.</p>
+        <span class="rtag">geometry · pre-hardware</span>
+      </div>
+      <div class="rcard reveal d2"><div class="glowline"></div>
+        <div class="rnum">R-02 · most likely to bite</div>
+        <h4>The membrane stiffness dilemma</h4>
+        <p>A tensioned skin must be taut enough not to sag under forming pressure, yet slack enough not to pull the stave tips inward. It can't be both at once. We coupon-test a flexible bending-skin (spring shim / PETG) against a stretch elastomer to find the regime that wins for smooth limbs.</p>
+        <span class="rtag">mechanics</span>
+      </div>
+      <div class="rcard reveal d3"><div class="glowline"></div>
+        <div class="rnum">R-03</div>
+        <h4>Stave topology &amp; placement</h4>
+        <p>Uniform spacing is probably wrong. The features that prevent skin breakdown — fibular head, tibial crest, tibial tubercle — cluster anterolaterally. We're deriving non-uniform stave layouts from where real rectifications put their sharpest gradients.</p>
+        <span class="rtag">geometry · clinical</span>
+      </div>
+      <div class="rcard reveal d1"><div class="glowline"></div>
+        <div class="rnum">R-04</div>
+        <h4>Calibration drift &amp; maintenance</h4>
+        <p>Lead screws develop backlash; a non-expert won't notice slow zero-drift and will quietly produce wrong sockets. We design the re-zero procedure and reference master as first-class deliverables, not footnotes.</p>
+        <span class="rtag">reliability</span>
+      </div>
+      <div class="rcard reveal d2"><div class="glowline"></div>
+        <div class="rnum">R-05</div>
+        <h4>Setting time &amp; cross-coupling</h4>
+        <p>24–48 settings in 10–15 minutes is ~30s each for a non-expert — optimistic, and worse if staves couple. We mechanically decouple staves or enforce a strict setting order, then validate realistic timing on non-experts, not on our own team.</p>
+        <span class="rtag">human factors</span>
+      </div>
+      <div class="rcard flag reveal d3"><div class="glowline"></div>
+        <div class="rnum">R-06 · the gating risk</div>
+        <h4>Clinical safety &amp; validation</h4>
+        <p>A non-expert producing a load-bearing socket is a serious safety claim, and the check-socket + pressure-sensing loop meant to make it safe is itself unproven. A certified prosthetist defines the accuracy target and red-flag criteria <em>early</em>. No human is fitted until this loop is validated.</p>
+        <span class="rtag">clinical · regulatory</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ROADMAP -->
+<section id="roadmap">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="sec-tag">05 — Roadmap</div>
+      <h2>From a laptop study to deployed open hardware</h2>
+      <p>De-risked in the right order: the cheapest, most decision-relevant tests come first. A bad result on V1's fidelity study kills the concept before a dollar of hardware time is spent.</p>
+    </div>
+    <div class="road-tabs reveal">
+      <div class="road-tab active" data-road="v1"><span class="v">VERSION 1</span>Prove the geometry</div>
+      <div class="road-tab" data-road="v2"><span class="v">VERSION 2</span>Prove it in the field</div>
+      <div class="road-tab" data-road="v3"><span class="v">VERSION 3</span>Scale &amp; open it up</div>
+    </div>
+
+    <div class="road-panel active" data-panel="v1">
+      <div class="road-body">
+        <div class="road-meta reveal">
+          <span class="phase">PHASE · BENCH &amp; SIMULATION</span>
+          <h3>V1 — Prove the geometry</h3>
+          <div class="horizon">Horizon: months 0–9 · lab only, no patients</div>
+          <p>Establish that the stave-and-membrane concept can represent a clinically acceptable surface, and build the first dumb former + check-socket loop on the bench.</p>
+        </div>
+        <div class="milestones reveal d2">
+          <div class="ms"><div class="dot"></div><div><h4>Software fidelity study</h4><p>Error heat-maps over real rectified scans. Sweep stave count, placement, control points. Go/no-go gate for the whole concept.</p></div></div>
+          <div class="ms"><div class="dot"></div><div><h4>Clinician-defined accuracy target</h4><p>A CPO advisor translates the residual-error maps into an acceptable tolerance and red-flag criteria.</p></div></div>
+          <div class="ms"><div class="dot"></div><div><h4>Membrane coupon tests</h4><p>Bending-skin vs. elastomer under forming pressure and heat. Decide the skin before the frame.</p></div></div>
+          <div class="ms"><div class="dot"></div><div><h4>First manual former + PCL loop</h4><p>Bench prototype: dial settings by hand, form a check socket, measure surface error against the digital target.</p></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="road-panel" data-panel="v2">
+      <div class="road-body">
+        <div class="road-meta reveal">
+          <span class="phase">PHASE · SUPERVISED PILOT</span>
+          <h3>V2 — Prove it in the field</h3>
+          <div class="horizon">Horizon: months 9–24 · CPO-supervised fittings</div>
+          <p>Move from bench to a small, clinically supervised pilot. Validate the safety loop on real limbs with a prosthetist present and accountable.</p>
+        </div>
+        <div class="milestones reveal d2">
+          <div class="ms"><div class="dot"></div><div><h4>Pressure-sensing fit verification</h4><p>Instrument the check-socket loop so fit quality is measured, not judged by eye — the core of the safety claim.</p></div></div>
+          <div class="ms"><div class="dot"></div><div><h4>Refined, non-uniform stave topology</h4><p>Hardware reflects the placement study — denser anterolaterally over the bony prominences.</p></div></div>
+          <div class="ms"><div class="dot"></div><div><h4>Calibration &amp; maintenance protocol</h4><p>Re-zero procedure, reference master, and a non-expert-tested setting workflow with validated timing.</p></div></div>
+          <div class="ms"><div class="dot"></div><div><h4>Supervised patient fittings</h4><p>First human sockets, every one signed off by a certified prosthetist against the V1 red-flag criteria.</p></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="road-panel" data-panel="v3">
+      <div class="road-body">
+        <div class="road-meta reveal">
+          <span class="phase">PHASE · SCALE &amp; RELEASE</span>
+          <h3>V3 — Scale &amp; open it up</h3>
+          <div class="horizon">Horizon: year 2+ · deployment &amp; open release</div>
+          <p>Turn a validated system into a deployable, teachable, fully open platform — and broaden from the socket toward a wider library of accessible medical hardware.</p>
+        </div>
+        <div class="milestones reveal d2">
+          <div class="ms"><div class="dot"></div><div><h4>Full open-hardware release</h4><p>CAD, firmware-free build files, BOMs, and the fitting software published under open licenses — manufacturable locally.</p></div></div>
+          <div class="ms"><div class="dot"></div><div><h4>Train-the-technician program</h4><p>A curriculum and certification so partner organizations can run fittings independently and safely.</p></div></div>
+          <div class="ms"><div class="dot"></div><div><h4>Regulatory pathway</h4><p>Documentation and evidence package for approval in target deployment regions.</p></div></div>
+          <div class="ms"><div class="dot"></div><div><h4>Platform expansion</h4><p>Apply the durables/consumables + phone-as-brain pattern to orthotics and other accessible medical devices.</p></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- OPEN SOURCE -->
+<section id="opensource">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="sec-tag">06 — Open source</div>
+      <h2>Built in the open, manufacturable anywhere</h2>
+      <p>A device that can't be repaired or reproduced locally fails the people it's meant to serve. Everything — hardware, software, methods, and the honest negative results — is published openly so anyone, anywhere can build, fix, audit, and improve it.</p>
+    </div>
+    <div class="os-grid">
+      <div class="terminal reveal">
+        <div class="term-bar"><span class="d" style="background:#ff5f57"></span><span class="d" style="background:#febc2e"></span><span class="d" style="background:#28c840"></span><span class="t">qadam-lab / socket-former</span></div>
+        <div class="term-body">
+          <div><span class="c"># clone the open hardware repo</span></div>
+          <div><span class="g">$</span> git clone qadam.org/<span class="b">socket-former</span></div>
+          <div style="color:var(--txt-faint)">  ↳ /cad        <span class="c">parametric former, all DOF</span></div>
+          <div style="color:var(--txt-faint)">  ↳ /fidelity   <span class="c">stave-error sim + datasets</span></div>
+          <div style="color:var(--txt-faint)">  ↳ /app        <span class="c">scan → rectify → settings</span></div>
+          <div style="color:var(--txt-faint)">  ↳ /bom        <span class="c">sourcing under $X / unit</span></div>
+          <div style="color:var(--txt-faint)">  ↳ /clinical   <span class="c">accuracy targets, red flags</span></div>
+          <div style="margin-top:8px"><span class="g">$</span> python <span class="v">fidelity/sweep.py</span> --staves 8..16</div>
+          <div><span class="w">→ residual error map written. n=12 clears target.</span></div>
+        </div>
+      </div>
+      <div class="os-feats reveal d2">
+        <div class="os-feat"><div class="k">◆</div><div><h4>Open hardware &amp; CAD</h4><p>Parametric, electronics-free designs. Fork it, fab it on a local CNC, adapt it to what your supply chain can source.</p></div></div>
+        <div class="os-feat"><div class="k">◆</div><div><h4>Open fitting software</h4><p>The scan-to-settings pipeline that turns any phone into the system's brain — auditable and free.</p></div></div>
+        <div class="os-feat"><div class="k">◆</div><div><h4>Open methods &amp; data</h4><p>Fidelity sims, coupon-test results, and the clinical accuracy criteria — including what didn't work.</p></div></div>
+        <div class="os-feat"><div class="k">◆</div><div><h4>Non-profit, no lock-in</h4><p>No proprietary cartridges, no cloud dependency, no per-fitting fee. The consumable is a sheet of plastic you can buy anywhere.</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HONESTY / RISK -->
+<section id="honesty" style="padding-top:0;">
+  <div class="wrap reveal">
+    <div class="risk">
+      <div class="ricon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 3 L22 20 H2 Z" stroke="#ffcf6b" stroke-width="1.6"/><path d="M12 10 V14 M12 16.5 V17" stroke="#ffcf6b" stroke-width="1.8" stroke-linecap="round"/></svg>
+      </div>
+      <div>
+        <h3>What could stop us — said plainly</h3>
+        <p>The mechatronics are tractable. The real gating risk is clinical: a non-expert producing a load-bearing socket without a prosthetist present is a significant safety claim, and the safety loop that's meant to justify it is unproven. We won't let the engineering elegance of the former pull focus from validating that loop — because that's what a pilot, a funder, and a regulator will rightly interrogate. A certified prosthetist is involved before any human is fitted. We publish our negative results too.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GET INVOLVED -->
+<section id="involved">
+  <div class="wrap">
+    <div class="cta-box reveal">
+      <h2>Help us build the first one.</h2>
+      <p>Qadam is early, open, and looking for the people who can move it from a thesis to a fitted limb. There's a role here whoever you are.</p>
+      <div class="cta-actions">
+        <a href="mailto:hello@qadam.org" class="btn btn-primary">Reach out →</a>
+        <a href="#opensource" class="btn btn-ghost">Explore the open repo</a>
+      </div>
+      <div class="role-grid">
+        <div class="role"><h4>◆ Engineers</h4><p>Mechanical, geometry-processing, and mobile devs to build the former and the scan-to-settings pipeline.</p></div>
+        <div class="role"><h4>◆ Clinicians</h4><p>Prosthetists &amp; O&amp;P researchers to set the accuracy targets, red-flag criteria, and validate fit.</p></div>
+        <div class="role"><h4>◆ Funders</h4><p>Grant-givers and partners backing high-leverage, open, deeply unglamorous frontier work.</p></div>
+        <div class="role"><h4>◆ Field partners</h4><p>NGOs and clinics in deployment regions to co-design and host supervised pilots.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
 </main>
 
-<footer><p>© 2026 Qadam · Open hardware &amp; open methods · work in progress</p></footer>
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <a href="#hero" class="brand">
+          <span class="mark"><svg viewBox="0 0 32 32" fill="none"><path d="M16 2 L28 9 V23 L16 30 L4 23 V9 Z" stroke="#39f5c8" stroke-width="1.5"/><path d="M16 9 V23 M10 12 L16 16 L22 12 M10 20 L16 16 L22 20" stroke="#5b8cff" stroke-width="1.3"/></svg></span>
+          Qadam
+        </a>
+        <p>An open-source frontier lab for accessible prosthetics and well-made, affordable medical technology. <em>Qadam</em> (قدم) — "a step forward."</p>
+        <p class="foot-note" style="margin-top:18px;display:inline-block;">Open hardware · open methods · non-profit</p>
+      </div>
+      <div class="foot-cols">
+        <div class="foot-col"><h5>Project</h5><a href="#thesis">Thesis</a><a href="#device">The device</a><a href="#research">Research agenda</a><a href="#roadmap">Roadmap</a></div>
+        <div class="foot-col"><h5>Build</h5><a href="#opensource">Open hardware</a><a href="#opensource">Fitting software</a><a href="#opensource">Methods &amp; data</a><a href="#honesty">Known risks</a></div>
+        <div class="foot-col"><h5>Connect</h5><a href="#involved">Get involved</a><a href="mailto:hello@qadam.org">Contact</a><a href="#involved">For funders</a><a href="#involved">For clinicians</a></div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <p>© 2026 Qadam · Open hardware &amp; open methods</p>
+      <p>Built as a living design document — figures &amp; targets are provisional.</p>
+    </div>
+  </div>
+</footer>
 
 <script>
+/* ---------- scroll progress + nav ---------- */
 const nav=document.getElementById('nav'),prog=document.getElementById('progress');
-function onScroll(){const h=document.documentElement;const sc=h.scrollTop/(h.scrollHeight-h.clientHeight);prog.style.width=(sc*100)+'%';nav.classList.toggle('scrolled',h.scrollTop>40);}
+function onScroll(){
+  const h=document.documentElement;
+  const sc=h.scrollTop/(h.scrollHeight-h.clientHeight);
+  prog.style.width=(sc*100)+'%';
+  nav.classList.toggle('scrolled',h.scrollTop>40);
+}
 document.addEventListener('scroll',onScroll,{passive:true});onScroll();
 
-const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.12});
+/* ---------- reveal on scroll ---------- */
+const io=new IntersectionObserver((es)=>{
+  es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});
+},{threshold:.12,rootMargin:'0px 0px -8% 0px'});
 document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 
+/* ---------- count-up stats ---------- */
 const counters=document.querySelectorAll('.num[data-target]');
-const cio=new IntersectionObserver((es)=>{es.forEach(e=>{if(!e.isIntersecting)return;const el=e.target,target=+el.dataset.target,suf=el.dataset.suffix||'';let t0=null;function step(t){if(!t0)t0=t;const p=Math.min((t-t0)/1400,1);el.textContent=Math.round(target*(1-Math.pow(1-p,3)))+suf;if(p<1)requestAnimationFrame(step);}requestAnimationFrame(step);cio.unobserve(el);});},{threshold:.5});
+const cio=new IntersectionObserver((es)=>{
+  es.forEach(e=>{
+    if(!e.isIntersecting)return;
+    const el=e.target,target=+el.dataset.target,pre=el.dataset.prefix||'',suf=el.dataset.suffix||'';
+    let cur=0,dur=1400,t0=null;
+    function step(t){if(!t0)t0=t;const p=Math.min((t-t0)/dur,1);
+      const ease=1-Math.pow(1-p,3);cur=Math.round(target*ease);
+      el.textContent=pre+cur+suf;if(p<1)requestAnimationFrame(step);}
+    requestAnimationFrame(step);cio.unobserve(el);
+  });
+},{threshold:.5});
 counters.forEach(c=>cio.observe(c));
 
-(function(){const c=document.getElementById('bg-canvas');if(!c)return;const ctx=c.getContext('2d');let w,h,pts=[];
-function resize(){w=c.width=innerWidth;h=c.height=innerHeight;const count=Math.min(70,Math.floor(w*h/24000));pts=Array.from({length:count},()=>({x:Math.random()*w,y:Math.random()*h,vx:(Math.random()-.5)*.25,vy:(Math.random()-.5)*.25}));}
-resize();addEventListener('resize',resize);
-function loop(){ctx.clearRect(0,0,w,h);for(const p of pts){p.x+=p.vx;p.y+=p.vy;if(p.x<0||p.x>w)p.vx*=-1;if(p.y<0||p.y>h)p.vy*=-1;}
-for(let i=0;i<pts.length;i++){const a=pts[i];for(let j=i+1;j<pts.length;j++){const b=pts[j];const d=Math.hypot(a.x-b.x,a.y-b.y);if(d<130){ctx.strokeStyle='rgba(91,140,255,'+(1-d/130)*0.18+')';ctx.lineWidth=.6;ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();}}ctx.fillStyle='rgba(150,180,230,.5)';ctx.beginPath();ctx.arc(a.x,a.y,1.3,0,7);ctx.fill();}requestAnimationFrame(loop);}
-loop();})();
+/* ---------- roadmap tabs ---------- */
+document.querySelectorAll('.road-tab').forEach(tab=>{
+  tab.addEventListener('click',()=>{
+    const id=tab.dataset.road;
+    document.querySelectorAll('.road-tab').forEach(t=>t.classList.toggle('active',t===tab));
+    document.querySelectorAll('.road-panel').forEach(p=>{
+      const on=p.dataset.panel===id;p.classList.toggle('active',on);
+      if(on)p.querySelectorAll('.reveal').forEach(r=>r.classList.add('in'));
+    });
+  });
+});
+
+/* ---------- animated stave former ---------- */
+(function(){
+  const g=document.getElementById('staves');if(!g)return;
+  const N=9,topY=40,botY=280,topRx=90,botRx=55,cx=160;
+  const staves=[];
+  for(let i=0;i<N;i++){
+    const a=(i/N)*Math.PI*2;
+    const tx=cx+Math.cos(a)*topRx, bx=cx+Math.cos(a)*botRx;
+    const tyo=Math.sin(a)*20, byo=Math.sin(a)*13;
+    const p=document.createElementNS('http://www.w3.org/2000/svg','path');
+    p.setAttribute('stroke', i%3===0 ? 'url(#lg)' : '#2a3650');
+    p.setAttribute('stroke-width', i%3===0 ? '2' : '1.4');
+    p.setAttribute('fill','none');
+    p.setAttribute('opacity', i%3===0 ? '1' : '.7');
+    g.appendChild(p);
+    staves.push({tx,ty:topY+tyo,bx,by:botY+byo,phase:a});
+  }
+  let t=0;
+  function draw(){
+    t+=0.018;
+    staves.forEach((s,i)=>{
+      // mid control point bulges in/out to mimic reshaping
+      const bulge=Math.sin(t+s.phase)*10;
+      const mx=(s.tx+s.bx)/2 + Math.cos(s.phase)*bulge;
+      const my=(s.ty+s.by)/2;
+      const path=g.children[i];
+      path.setAttribute('d',`M${s.tx} ${s.ty} Q ${mx} ${my} ${s.bx} ${s.by}`);
+    });
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+/* ---------- background particle/network field ---------- */
+(function(){
+  const c=document.getElementById('bg-canvas');if(!c)return;
+  const ctx=c.getContext('2d');let w,h,pts=[];
+  function resize(){w=c.width=innerWidth;h=c.height=innerHeight;
+    const count=Math.min(70,Math.floor(w*h/24000));
+    pts=Array.from({length:count},()=>({
+      x:Math.random()*w,y:Math.random()*h,
+      vx:(Math.random()-.5)*.25,vy:(Math.random()-.5)*.25}));}
+  resize();addEventListener('resize',resize);
+  let mx=-999,my=-999;
+  addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;});
+  function loop(){
+    ctx.clearRect(0,0,w,h);
+    for(const p of pts){
+      p.x+=p.vx;p.y+=p.vy;
+      if(p.x<0||p.x>w)p.vx*=-1;if(p.y<0||p.y>h)p.vy*=-1;
+    }
+    for(let i=0;i<pts.length;i++){
+      const a=pts[i];
+      for(let j=i+1;j<pts.length;j++){
+        const b=pts[j];const dx=a.x-b.x,dy=a.y-b.y,d=Math.hypot(dx,dy);
+        if(d<130){ctx.strokeStyle='rgba(91,140,255,'+(1-d/130)*0.18+')';
+          ctx.lineWidth=.6;ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();}
+      }
+      const dmx=a.x-mx,dmy=a.y-my,dm=Math.hypot(dmx,dmy);
+      if(dm<160){ctx.strokeStyle='rgba(57,245,200,'+(1-dm/160)*0.25+')';
+        ctx.lineWidth=.7;ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(mx,my);ctx.stroke();}
+      ctx.fillStyle='rgba(150,180,230,.5)';
+      ctx.beginPath();ctx.arc(a.x,a.y,1.3,0,7);ctx.fill();
+    }
+    requestAnimationFrame(loop);
+  }
+  loop();
+})();
 </script>
 </body>
 </html>
