@@ -5,6 +5,27 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Qadam — Open-Source Frontier Lab for Accessible Prosthetics</title>
 <meta name="description" content="Qadam is an open-source frontier research lab building affordable, field-deployable prosthetic and medical technology for the world's underserved. We move the intelligence into software and make the hardware dumb, cheap, and unbreakable." />
+<meta name="theme-color" content="#05070d" />
+
+<!-- Favicon (scalable SVG mark) -->
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+<link rel="apple-touch-icon" href="assets/favicon.svg" />
+
+<!-- Open Graph / social card -->
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Qadam" />
+<meta property="og:title" content="Qadam — a prosthetic limb for everyone left out." />
+<meta property="og:description" content="An open-source frontier lab building affordable, field-deployable prosthetics. Intelligence in software; hardware kept dumb, cheap, and nearly unbreakable." />
+<meta property="og:image" content="assets/og-image.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+
+<!-- Twitter / X card -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Qadam — a prosthetic limb for everyone left out." />
+<meta name="twitter:description" content="An open-source frontier lab building affordable, field-deployable prosthetics. Intelligence in software; hardware kept dumb, cheap, and nearly unbreakable." />
+<meta name="twitter:image" content="assets/og-image.png" />
+
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
@@ -101,6 +122,31 @@ nav.scrolled{background:rgba(5,7,13,.72);backdrop-filter:blur(14px);border-botto
 .stat .num{font-family:'Space Grotesk';font-size:34px;font-weight:700;
   background:linear-gradient(120deg,#fff,var(--accent));-webkit-background-clip:text;background-clip:text;color:transparent;}
 .stat .lbl{font-size:13px;color:var(--txt-faint);margin-top:2px;}
+
+/* ---------- hero "living material": iridescent aura + limb-scan ---------- */
+#hero .wrap{position:relative;z-index:3;}
+.hero-aura{position:absolute;inset:-12% -8% 0 -8%;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(38% 48% at 68% 28%, rgba(57,245,200,.20), transparent 70%),
+    radial-gradient(46% 56% at 86% 58%, rgba(91,140,255,.22), transparent 72%),
+    radial-gradient(42% 52% at 62% 82%, rgba(176,123,255,.18), transparent 72%);
+  filter:blur(26px);opacity:.9;
+  animation:auraDrift 24s var(--ease) infinite alternate;}
+@keyframes auraDrift{
+  0%{transform:translate3d(0,0,0) scale(1);}
+  100%{transform:translate3d(-3.5%,2.5%,0) scale(1.09);}
+}
+.hero-scan{position:absolute;top:50%;right:max(-70px,-6vw);transform:translateY(-50%);
+  width:min(48vw,580px);z-index:1;opacity:.72;pointer-events:none;
+  -webkit-mask-image:radial-gradient(70% 70% at 60% 50%,#000 55%,transparent 100%);
+          mask-image:radial-gradient(70% 70% at 60% 50%,#000 55%,transparent 100%);}
+.hero-scan svg{width:100%;height:auto;display:block;filter:drop-shadow(0 0 22px rgba(57,245,200,.18));}
+.scan-bar{animation:scanSweep 6.5s var(--ease) infinite;}
+.scan-pulse{animation:scanPulse 3.2s ease-in-out infinite;}
+@keyframes scanSweep{0%,100%{transform:translateY(-104px);opacity:.12;}50%{transform:translateY(104px);opacity:.55;}}
+@keyframes scanPulse{0%,100%{opacity:.35;}50%{opacity:1;}}
+@media (max-width:920px){.hero-scan{opacity:.4;width:min(70vw,460px);right:-20%;}}
+@media (max-width:600px){.hero-scan{display:none;}}
 
 /* ---------- section headings ---------- */
 .sec-head{max-width:760px;margin-bottom:64px;}
@@ -296,6 +342,14 @@ footer{border-top:1px solid var(--line);padding:60px 0 40px;}
   .nav-cta .btn-ghost{display:none}
   .hero-stats{gap:28px}
 }
+
+/* ---------- respect reduced motion (decorative motion is opt-out) ---------- */
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.001ms !important;animation-iteration-count:1 !important;
+    transition-duration:.001ms !important;scroll-behavior:auto !important;}
+  .hero-aura{animation:none;}
+  #bg-canvas{display:none;}
+}
 </style>
 </head>
 <body>
@@ -333,6 +387,72 @@ footer{border-top:1px solid var(--line);padding:60px 0 40px;}
 
 <!-- HERO -->
 <section id="hero">
+  <!-- iridescent "living material" aura -->
+  <div class="hero-aura" aria-hidden="true"></div>
+
+  <!-- animated limb-scan focal piece (topographic socket capture) -->
+  <div class="hero-scan" aria-hidden="true">
+    <svg viewBox="0 0 400 400" role="img" aria-label="Stylized limb scan">
+      <defs>
+        <linearGradient id="heroGrad" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#39f5c8"/>
+          <stop offset="0.55" stop-color="#5b8cff"/>
+          <stop offset="1" stop-color="#b07bff"/>
+        </linearGradient>
+        <radialGradient id="heroCore" cx="0.5" cy="0.5" r="0.5">
+          <stop offset="0" stop-color="#39f5c8" stop-opacity="0.35"/>
+          <stop offset="1" stop-color="#39f5c8" stop-opacity="0"/>
+        </radialGradient>
+        <clipPath id="scanClip"><rect x="40" y="40" width="320" height="320" rx="12"/></clipPath>
+      </defs>
+
+      <!-- core glow -->
+      <circle cx="200" cy="200" r="150" fill="url(#heroCore)"/>
+
+      <!-- topographic contour rings (limb cross-section) -->
+      <g fill="none" stroke="url(#heroGrad)">
+        <ellipse cx="200" cy="200" rx="46"  ry="78"  stroke-width="2"   opacity="0.95"/>
+        <ellipse cx="200" cy="200" rx="66"  ry="104" stroke-width="1.6" opacity="0.8"/>
+        <ellipse cx="200" cy="200" rx="88"  ry="128" stroke-width="1.4" opacity="0.62"/>
+        <ellipse cx="200" cy="200" rx="112" ry="152" stroke-width="1.2" opacity="0.46"/>
+        <ellipse cx="200" cy="200" rx="138" ry="176" stroke-width="1"   opacity="0.3"/>
+      </g>
+
+      <!-- rotating dashed measurement orbit -->
+      <g opacity="0.55">
+        <circle cx="200" cy="200" r="158" fill="none" stroke="#5b8cff" stroke-width="1"
+                stroke-dasharray="2 12" opacity="0.7">
+          <animateTransform attributeName="transform" type="rotate"
+            from="0 200 200" to="360 200 200" dur="48s" repeatCount="indefinite"/>
+        </circle>
+      </g>
+
+      <!-- scan landmark nodes -->
+      <g class="scan-pulse">
+        <circle cx="200" cy="122" r="3.2" fill="#39f5c8"/>
+        <circle cx="288" cy="200" r="3.2" fill="#5b8cff"/>
+        <circle cx="200" cy="278" r="3.2" fill="#b07bff"/>
+        <circle cx="112" cy="200" r="3.2" fill="#5b8cff"/>
+        <circle cx="252" cy="150" r="2.6" fill="#39f5c8"/>
+        <circle cx="252" cy="250" r="2.6" fill="#b07bff"/>
+        <circle cx="148" cy="250" r="2.6" fill="#5b8cff"/>
+        <circle cx="148" cy="150" r="2.6" fill="#39f5c8"/>
+      </g>
+      <g stroke="#5b8cff" stroke-width="0.8" opacity="0.3">
+        <path d="M200 122 L288 200 L200 278 L112 200 Z" fill="none"/>
+        <path d="M252 150 L252 250 M148 150 L148 250 M148 150 L252 250 M252 150 L148 250"/>
+      </g>
+
+      <!-- vertical scan bar sweeping the capture -->
+      <g clip-path="url(#scanClip)">
+        <g class="scan-bar">
+          <rect x="196" y="40" width="2" height="320" fill="#39f5c8" opacity="0.9"/>
+          <rect x="186" y="40" width="22" height="320" fill="url(#heroCore)" opacity="0.6"/>
+        </g>
+      </g>
+    </svg>
+  </div>
+
   <div class="wrap">
     <div class="eyebrow reveal"><span class="pulse"></span> Open-source frontier lab · prosthetics &amp; accessible medical tech</div>
     <h1 class="reveal d1">A prosthetic limb<br/>for <span class="grad">everyone left out.</span></h1>
@@ -707,6 +827,10 @@ footer{border-top:1px solid var(--line);padding:60px 0 40px;}
 </footer>
 
 <script>
+/* ---------- motion preference ---------- */
+const REDUCE = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+if(REDUCE){document.querySelectorAll('svg').forEach(s=>{try{s.pauseAnimations&&s.pauseAnimations();}catch(e){}});}
+
 /* ---------- scroll progress + nav ---------- */
 const nav=document.getElementById('nav'),prog=document.getElementById('progress');
 function onScroll(){
@@ -817,12 +941,15 @@ document.querySelectorAll('.road-tab').forEach(tab=>{
     });
     requestAnimationFrame(draw);
   }
-  draw();
+  if(REDUCE){ // render one static frame, no loop
+    staves.forEach((s,i)=>{const mx=(s.tx+s.bx)/2,my=(s.ty+s.by)/2;
+      g.children[i].setAttribute('d',`M${s.tx} ${s.ty} Q ${mx} ${my} ${s.bx} ${s.by}`);});
+  }else{draw();}
 })();
 
 /* ---------- background particle/network field ---------- */
 (function(){
-  const c=document.getElementById('bg-canvas');if(!c)return;
+  const c=document.getElementById('bg-canvas');if(!c||REDUCE){if(c)c.style.display='none';return;}
   const ctx=c.getContext('2d');let w,h,pts=[];
   function resize(){w=c.width=innerWidth;h=c.height=innerHeight;
     const count=Math.min(70,Math.floor(w*h/24000));

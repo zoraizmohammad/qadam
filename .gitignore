@@ -30,3 +30,11 @@ venv/
 # Secrets
 .env
 .env.*
+*.key
+*secret*
+
+# nano-banana / image-gen tooling — never commit keys or generated raster dumps
+.nano-banana-config.json
+tools/nano-banana/mcp.local.json
+generated_imgs/
+nano-banana-images/

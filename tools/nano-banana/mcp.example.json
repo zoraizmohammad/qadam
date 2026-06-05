@@ -1,0 +1,13 @@
+{
+  "//": "Nano-Banana MCP server config (Google Gemini 2.5 Flash Image).",
+  "//key": "DO NOT paste your real key here. Copy this file to mcp.local.json (gitignored) and put the key there, or set GEMINI_API_KEY in your shell.",
+  "mcpServers": {
+    "nano-banana": {
+      "command": "npx",
+      "args": ["nano-banana-mcp"],
+      "env": {
+        "GEMINI_API_KEY": "${GEMINI_API_KEY}"
+      }
+    }
+  }
+}
