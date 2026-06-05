@@ -1,23 +1,110 @@
-# Qadam
+<div align="center">
 
-**An open-source frontier lab for accessible prosthetics.**
+# Qadam · قدم
 
-Qadam (قدم — "a step forward") is a non-profit research project building
-affordable, field-deployable prosthetic and medical technology for refugees and
-the world's underserved.
+**An open-source frontier lab for accessible prosthetics & affordable medical technology.**
 
-## The core idea
+*Qadam means "a step forward."*
 
-Move the intelligence into software; make the hardware dumb, cheap, and nearly
-unbreakable. A smartphone does the scanning, computation, and fit-checking. What
-ships to the field is a rugged, reusable tool — and the only per-patient cost is a
-sheet of thermoplastic.
+Open hardware · Open methods · Non-profit
 
-## Status
+</div>
 
-Very early. Currently scoping the highest-risk subsystem: a compact reconfigurable
-socket mold-former.
+---
+
+## Mission
+
+Qadam builds **affordable, field-deployable** prosthetic and medical technology
+for refugees and the world's underserved. Roughly 65 million people need a
+prosthetic or orthotic device; only about 1 in 10 has access to one. The barrier
+usually isn't the limb — it's everything around it: the clinician, the lab, the
+power, the supply chain.
+
+## The thesis
+
+> **Move the intelligence into software. Make the hardware dumb.**
+
+- **Smartphone app + dumb hardware** — all scanning, computation, fit-checking and
+  guidance run on a device the user already carries. The field tool has no
+  electronics to break, no firmware to update, nothing to calibrate to a cloud.
+- **Reusable former + cheap consumable** — one durable, reconfigurable tool serves
+  hundreds of patients. The only per-patient cost is a sheet of thermoplastic.
+  This durables/consumables split is the economic engine of the whole project.
+- **Clinician in the loop, remotely** — a certified prosthetist sets the accuracy
+  targets and red-flag criteria the software enforces, so expertise scales without
+  a specialist in every tent.
+
+## Flagship device — the reconfigurable socket mold-former
+
+The socket is the make-or-break interface between limb and prosthetic. Our former
+is a single reusable tool that takes a digital limb model and reshapes itself into
+the mold for a properly rectified socket. Key design calls:
+
+- **Reduced-DOF staves + membrane**, not a dense pin array — ~30–50 hand-set
+  controls instead of hundreds of actuated pins.
+- **Drape-and-wrap forming**, not full vacuum — sidesteps the membrane-sag and
+  sealing traps.
+- **Manual, digitally-guided** — the app prints settings; a technician dials them
+  in by hand. No motors, no power needed to *shape* a limb.
+- **PCL check-socket loop** — an off-grid trial socket (forms in boiling water)
+  lets fit be verified and rectification iterated before the definitive socket.
+
+See [`docs/design-brief.md`](docs/design-brief.md) for the full device brief.
+
+## Repository structure
+
+```
+qadam/
+├── README.md              ← you are here
+├── LICENSE                ← MIT
+├── docs/
+│   ├── design-brief.md    ← socket mold-former design brief
+│   ├── research-agenda.md ← open questions, ranked by risk
+│   └── roadmap.md         ← V1 / V2 / V3 plan
+└── web/
+    ├── index.html         ← the project website (single-file, no build step)
+    └── README.md
+```
+
+## The website
+
+A single-file, dependency-free landing page lives in [`web/`](web/). It presents
+the mission, the device, the research agenda, and the V1/V2/V3 roadmap with a
+dark "frontier lab" aesthetic and scroll/canvas animations.
+
+**Run it:** just open `web/index.html` in any modern browser — there is no build
+step. (Fonts load from Google Fonts when online; the page degrades gracefully
+offline.)
+
+## Research agenda
+
+We are honest about what's unproven. The open questions, ranked by how likely each
+is to kill the concept, live in [`docs/research-agenda.md`](docs/research-agenda.md).
+The two that matter most: the **software fidelity study** (can the stave topology
+even represent a clinically acceptable surface?) and the **membrane stiffness
+dilemma**. The *gating* risk is clinical: a non-expert producing a load-bearing
+socket is a serious safety claim, and the safety loop meant to justify it is itself
+unproven. **No human is fitted until that loop is validated by a certified prosthetist.**
+
+## Roadmap
+
+- **V1 — Prove the geometry** (bench & simulation, no patients)
+- **V2 — Prove it in the field** (CPO-supervised pilot)
+- **V3 — Scale & open it up** (full open-hardware release, training, regulatory path)
+
+Details in [`docs/roadmap.md`](docs/roadmap.md).
+
+## Get involved
+
+Qadam is early, open, and looking for engineers, clinicians (especially CPOs),
+funders, and field partners. Contributions, issues, and feedback — including
+negative results — are welcome.
 
 ## License
 
-MIT — see [LICENSE](LICENSE).
+MIT — see [LICENSE](LICENSE). Hardware designs, when released, will carry an
+appropriate open-hardware license.
+
+## Author
+
+Mohammad Zoraiz · <zoraizmohammad@gmail.com>
