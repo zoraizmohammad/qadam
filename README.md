@@ -57,10 +57,15 @@ See [`docs/design-brief.md`](docs/design-brief.md) for the full device brief.
 qadam/
 ├── README.md              ← you are here
 ├── LICENSE                ← MIT
+├── .github/workflows/
+│   └── pages.yml          ← auto-deploys /web to GitHub Pages on push
 ├── docs/
 │   ├── design-brief.md    ← socket mold-former design brief
 │   ├── research-agenda.md ← open questions, ranked by risk
 │   └── roadmap.md         ← V1 / V2 / V3 plan
+├── design/
+│   ├── qadam-design-system.md  ← the site's colors, type, motion, architecture
+│   └── inspiration/            ← reference analyses (e.g. nucleoresearch.com)
 └── web/
     ├── index.html         ← the project website (single-file, no build step)
     └── README.md
@@ -72,9 +77,23 @@ A single-file, dependency-free landing page lives in [`web/`](web/). It presents
 the mission, the device, the research agenda, and the V1/V2/V3 roadmap with a
 dark "frontier lab" aesthetic and scroll/canvas animations.
 
-**Run it:** just open `web/index.html` in any modern browser — there is no build
-step. (Fonts load from Google Fonts when online; the page degrades gracefully
+**Run it locally:** just open `web/index.html` in any modern browser — there is no
+build step. (Fonts load from Google Fonts when online; the page degrades gracefully
 offline.)
+
+**Deploy:** pushing to `main` runs [`.github/workflows/pages.yml`](.github/workflows/pages.yml),
+which publishes the `/web` folder to GitHub Pages. One-time setup: in the repo's
+**Settings → Pages**, set **Source = GitHub Actions**. The site then lives at
+`https://<user>.github.io/qadam/`.
+
+**Get-involved form:** the form in the site's "Get involved" section posts to
+[Formspree](https://formspree.io) so it works on static hosting with no backend.
+One-time setup: create a free Formspree form and replace `YOUR_FORM_ID` in the
+form's `action` URL inside `web/index.html`. Until then the form shows a friendly
+"not configured yet" message instead of failing silently.
+
+The design language (colors, type, motion, architecture) is documented in
+[`design/qadam-design-system.md`](design/qadam-design-system.md).
 
 ## Research agenda
 
