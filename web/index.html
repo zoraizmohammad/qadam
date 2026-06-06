@@ -235,6 +235,26 @@ nav.scrolled{background:rgba(5,7,13,.72);backdrop-filter:blur(14px);border-botto
 .cta-box h2{font-size:clamp(28px,4vw,44px);margin-bottom:18px;position:relative;}
 .cta-box p{font-size:18px;color:var(--txt-dim);max-width:580px;margin:0 auto 34px;position:relative;}
 .cta-actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;position:relative;}
+/* get-involved form */
+.involve-form{position:relative;max-width:580px;margin:38px auto 0;text-align:left;}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.field{display:flex;flex-direction:column;margin-bottom:16px;}
+.field label{font-family:'JetBrains Mono';font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--txt-faint);margin-bottom:8px;}
+.field input,.field select,.field textarea{
+  font-family:'Inter',sans-serif;font-size:15px;color:var(--txt);
+  background:rgba(8,11,20,.7);border:1px solid var(--line);border-radius:10px;padding:13px 15px;
+  transition:border-color .25s,box-shadow .25s;width:100%;resize:vertical;}
+.field input::placeholder,.field textarea::placeholder{color:var(--txt-faint);}
+.field select{appearance:none;cursor:pointer;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%235d6982' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 15px center;}
+.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(57,245,200,.12);}
+.field option{background:#0c111d;color:var(--txt);}
+.form-actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:6px;}
+.form-submit[disabled]{opacity:.6;cursor:not-allowed;transform:none;}
+.form-status{text-align:center;font-size:14px;margin-top:16px;min-height:20px;font-weight:400;}
+.form-status.ok{color:var(--accent);}
+.form-status.err{color:#ff8f8f;}
 .role-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:54px;}
 .role{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:24px;text-align:left;transition:all .3s var(--ease);}
 .role:hover{border-color:rgba(57,245,200,.35);transform:translateY(-4px);}
@@ -611,10 +631,44 @@ footer{border-top:1px solid var(--line);padding:60px 0 40px;}
     <div class="cta-box reveal">
       <h2>Help us build the first one.</h2>
       <p>Qadam is early, open, and looking for the people who can move it from a thesis to a fitted limb. There's a role here whoever you are.</p>
-      <div class="cta-actions">
-        <a href="mailto:hello@qadam.org" class="btn btn-primary">Reach out →</a>
-        <a href="#opensource" class="btn btn-ghost">Explore the open repo</a>
-      </div>
+
+      <!-- Get-involved form. Submits to Formspree (works on static hosting / GitHub Pages).
+           SETUP: create a free form at https://formspree.io, then replace YOUR_FORM_ID below. -->
+      <form id="involve-form" class="involve-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+        <div class="field-row">
+          <div class="field">
+            <label for="if-name">Name</label>
+            <input id="if-name" name="name" type="text" required autocomplete="name" placeholder="Your name" />
+          </div>
+          <div class="field">
+            <label for="if-email">Email</label>
+            <input id="if-email" name="email" type="email" required autocomplete="email" placeholder="you@email.com" />
+          </div>
+        </div>
+        <div class="field">
+          <label for="if-role">I'm reaching out as a…</label>
+          <select id="if-role" name="role" required>
+            <option value="" disabled selected>Select a role</option>
+            <option>Engineer</option>
+            <option>Clinician / Prosthetist (CPO)</option>
+            <option>Funder / Partner</option>
+            <option>Field partner (NGO / clinic)</option>
+            <option>Other / just interested</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="if-msg">Message</label>
+          <textarea id="if-msg" name="message" rows="4" required placeholder="How would you like to help, or what would you like to know?"></textarea>
+        </div>
+        <!-- honeypot anti-spam field -->
+        <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;" />
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary form-submit">Send message →</button>
+          <a href="#opensource" class="btn btn-ghost">Explore the open repo</a>
+        </div>
+        <p class="form-status" role="status" aria-live="polite"></p>
+      </form>
+
       <div class="role-grid">
         <div class="role"><h4>◆ Engineers</h4><p>Mechanical, geometry-processing, and mobile devs to build the former and the scan-to-settings pipeline.</p></div>
         <div class="role"><h4>◆ Clinicians</h4><p>Prosthetists &amp; O&amp;P researchers to set the accuracy targets, red-flag criteria, and validate fit.</p></div>
@@ -683,6 +737,43 @@ const cio=new IntersectionObserver((es)=>{
   });
 },{threshold:.5});
 counters.forEach(c=>cio.observe(c));
+
+/* ---------- get-involved form ---------- */
+(function(){
+  const form=document.getElementById('involve-form');if(!form)return;
+  const status=form.querySelector('.form-status');
+  const btn=form.querySelector('.form-submit');
+  form.addEventListener('submit',async(e)=>{
+    e.preventDefault();
+    status.className='form-status';status.textContent='';
+    // guard: remind to configure the endpoint
+    if(form.action.indexOf('YOUR_FORM_ID')!==-1){
+      status.classList.add('err');
+      status.textContent='Form endpoint not configured yet — add your Formspree form ID in index.html.';
+      return;
+    }
+    btn.disabled=true;const label=btn.textContent;btn.textContent='Sending…';
+    try{
+      const res=await fetch(form.action,{
+        method:'POST',body:new FormData(form),headers:{'Accept':'application/json'}
+      });
+      if(res.ok){
+        form.reset();
+        status.classList.add('ok');
+        status.textContent='Thanks — your message is in. We\u2019ll be in touch.';
+      }else{
+        const data=await res.json().catch(()=>({}));
+        status.classList.add('err');
+        status.textContent=(data.errors&&data.errors[0]&&data.errors[0].message)||'Something went wrong. Please try again or email us directly.';
+      }
+    }catch(err){
+      status.classList.add('err');
+      status.textContent='Network error — please try again, or reach out directly.';
+    }finally{
+      btn.disabled=false;btn.textContent=label;
+    }
+  });
+})();
 
 /* ---------- roadmap tabs ---------- */
 document.querySelectorAll('.road-tab').forEach(tab=>{
