@@ -2,6 +2,14 @@
 
 A single-file, dependency-free landing page for the Qadam project.
 
+Qadam is an **accessible biotech venture** that packs an entire prosthetics clinic
+into one portable, solar-powered case — the phone, tools, and standardized parts to
+custom-fit **15–20 robust mechanical limbs** anywhere, plus the open IP to make more.
+The intelligence lives in the *fitting*; the limb the patient keeps is purely
+mechanical (no electronics, no battery, nothing to break).
+
+Repo: <https://github.com/zoraizmohammad/qadam>
+
 ## Run it
 
 Open `index.html` in any modern browser. There is no build step and no install.
@@ -24,15 +32,17 @@ Serif (display) with Inter (body) and JetBrains Mono (labels); buttons are pills
 cards are glassmorphic, and a persistent floating "Get involved" CTA appears on
 scroll.
 
-Sections: hero (iridescent), a stats proof band, thesis, the device (dark), the
-fitting loop, research agenda (dark bento), an interactive V1/V2/V3 roadmap, open
-source (dark terminal), a candid "known risks" callout, and get-involved
-(iridescent bookend). Animations: a slowly drifting iridescent gradient, a
-self-animating SVG of the stave former, scroll-reveal transitions, count-up stats,
-and tabbed roadmap panels. All decorative motion is disabled automatically for
-visitors who set `prefers-reduced-motion`.
+Sections: hero (iridescent), a stats proof band, thesis, **"What's in the case"**
+(iridescent — the carrying-case kit broken into reusable fitting tech, per-patient
+consumables, and power/logistics), the device (dark), the fitting loop, research
+agenda (dark bento), an interactive V1/V2/V3 roadmap, open source (dark terminal),
+a candid "known risks" callout, and get-involved (iridescent bookend). The nav and
+footer both carry a GitHub icon linking the repo. Animations: a slowly drifting
+iridescent gradient, a self-animating SVG of the stave former, scroll-reveal
+transitions, count-up stats, and tabbed roadmap panels. All decorative motion is
+disabled automatically for visitors who set `prefers-reduced-motion`.
 
-> The previous dark "frontier-lab" theme is preserved at `index.dark-backup.html`
+> The previous dark theme is preserved at `index.dark-backup.html`
 > (untracked) in case you want to compare or revert.
 
 ### `assets/`

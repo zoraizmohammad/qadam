@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Qadam — Open-Source Frontier Lab for Accessible Prosthetics</title>
-<meta name="description" content="Qadam is an open-source frontier research lab building affordable, field-deployable prosthetic and medical technology for the world's underserved. We move the intelligence into software and make the hardware dumb, cheap, and unbreakable." />
+<title>Qadam — A Prosthetics Clinic in a Case</title>
+<meta name="description" content="Qadam is an accessible biotech venture that packs an entire prosthetics clinic into one portable, solar-powered case — the phone, tools, and standardized parts to custom-fit 15–20 mechanical limbs anywhere, with the IP to make more. Intelligence lives in the fitting; the device the patient keeps is robust and purely mechanical." />
 <meta name="theme-color" content="#f4f2ed" />
 
 <!-- Favicon (scalable SVG mark) -->
@@ -14,16 +14,16 @@
 <!-- Open Graph / social card -->
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="Qadam" />
-<meta property="og:title" content="Qadam — a prosthetic limb for everyone left out." />
-<meta property="og:description" content="An open-source frontier lab building affordable, field-deployable prosthetics. Intelligence in software; hardware kept dumb, cheap, and nearly unbreakable." />
+<meta property="og:title" content="Qadam — a prosthetics clinic in a case." />
+<meta property="og:description" content="An accessible biotech venture: one portable, solar-powered case that custom-fits 15–20 robust mechanical prosthetics anywhere. Intelligence lives in the fitting; the limb stays purely mechanical." />
 <meta property="og:image" content="assets/og-image.png" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
 
 <!-- Twitter / X card -->
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="Qadam — a prosthetic limb for everyone left out." />
-<meta name="twitter:description" content="An open-source frontier lab building affordable, field-deployable prosthetics. Intelligence in software; hardware kept dumb, cheap, and nearly unbreakable." />
+<meta name="twitter:title" content="Qadam — a prosthetics clinic in a case." />
+<meta name="twitter:description" content="An accessible biotech venture: one portable, solar-powered case that custom-fits 15–20 robust mechanical prosthetics anywhere. Intelligence lives in the fitting; the limb stays purely mechanical." />
 <meta name="twitter:image" content="assets/og-image.png" />
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -117,6 +117,13 @@ nav.scrolled{background:rgba(244,242,237,.72);backdrop-filter:blur(16px) saturat
 .nav-links a::after{content:'';position:absolute;left:0;bottom:-5px;height:1px;width:0;background:var(--ink);transition:width .3s var(--ease);}
 .nav-links a:hover::after{width:100%;}
 .nav-cta{display:flex;gap:10px;align-items:center;}
+.icon-link{display:inline-grid;place-items:center;width:38px;height:38px;border-radius:50%;
+  border:1px solid var(--line);color:var(--ink-2);transition:all .25s var(--ease);}
+.icon-link:hover{color:var(--ink);border-color:var(--ink);transform:translateY(-2px);}
+.icon-link svg{width:18px;height:18px;}
+.foot-col .icon-link{display:inline-flex;width:auto;height:auto;border:none;border-radius:0;gap:8px;align-items:center;color:var(--on-black-dim);}
+.foot-col .icon-link:hover{color:#fff;transform:none;}
+.foot-col .icon-link svg{width:15px;height:15px;}
 
 /* ---------- buttons (pills) ---------- */
 .btn{display:inline-flex;align-items:center;gap:8px;font-family:'Inter';font-weight:500;font-size:14px;
@@ -193,6 +200,26 @@ nav.scrolled{background:rgba(244,242,237,.72);backdrop-filter:blur(16px) saturat
 .marquee-track span::after{content:'◆';position:absolute;right:-4px;color:var(--ink-faint);font-size:8px;top:50%;transform:translateY(-50%);}
 @keyframes marquee{to{transform:translateX(-50%);}}
 
+/* ---------- the kit (iridescent) ---------- */
+.kit-lead{display:grid;grid-template-columns:1.1fr .9fr;gap:50px;align-items:start;margin-bottom:48px;}
+.kit-lead .case-vis{padding:30px;border-radius:24px;display:flex;flex-direction:column;gap:16px;}
+.case-row{display:flex;align-items:center;gap:14px;font-size:14px;color:var(--ink-2);}
+.case-row .ci{flex-shrink:0;width:34px;height:34px;border-radius:9px;display:grid;place-items:center;
+  background:rgba(255,255,255,.6);border:1px solid var(--line);}
+.case-row .ci svg{width:18px;height:18px;}
+.case-meta{font-family:'JetBrains Mono';font-size:11.5px;letter-spacing:.04em;color:var(--ink-dim);
+  border-top:1px solid var(--line);padding-top:14px;margin-top:4px;}
+.kit-cols{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
+.kit-card{padding:30px;border-radius:22px;}
+.kit-card .ktag{font-family:'JetBrains Mono';font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--ink-faint);margin-bottom:12px;display:block;}
+.kit-card h4{font-size:18px;margin-bottom:6px;}
+.kit-card .ksub{font-size:13px;color:var(--ink-dim);margin-bottom:18px;}
+.kit-list{list-style:none;display:flex;flex-direction:column;gap:11px;}
+.kit-list li{display:flex;gap:10px;font-size:14px;color:var(--ink-2);line-height:1.45;}
+.kit-list li::before{content:'◆';color:var(--ink-faint);font-size:8px;margin-top:6px;flex-shrink:0;}
+.kit-list li b{color:var(--ink);font-weight:600;}
+
 /* ---------- device (dark) ---------- */
 .device-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;}
 .device-vis{position:relative;display:grid;place-items:center;min-height:380px;
@@ -266,6 +293,15 @@ nav.scrolled{background:rgba(244,242,237,.72);backdrop-filter:blur(16px) saturat
 .os-feat h4{font-size:16px;margin-bottom:5px;color:#fff;}
 .os-feat p{font-size:14px;color:var(--on-black-dim);}
 
+/* ---------- open problems ---------- */
+.q-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
+.qcard{padding:26px;border-radius:20px;position:relative;overflow:hidden;}
+.qcard .qline{position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--p2),var(--p3),var(--p1));opacity:.65;}
+.qcard .qn{font-family:'JetBrains Mono';font-size:11px;letter-spacing:.08em;color:var(--ink-faint);margin-bottom:13px;display:block;}
+.qcard h4{font-size:16.5px;margin-bottom:9px;line-height:1.25;}
+.qcard p{font-size:13.5px;color:var(--ink-dim);line-height:1.55;}
+.qcard .qtag{display:inline-block;margin-top:15px;font-family:'JetBrains Mono';font-size:10px;letter-spacing:.04em;color:var(--ink-2);border:1px solid var(--line);border-radius:100px;padding:4px 10px;}
+
 /* ---------- honesty ---------- */
 .risk{display:flex;gap:22px;align-items:flex-start;padding:36px;border-radius:22px;border:1px solid var(--line);
   background:linear-gradient(120deg,rgba(240,200,140,.1),rgba(255,255,255,.4));}
@@ -319,13 +355,14 @@ footer .brand{color:#fff;margin-bottom:18px;}
 @media (max-width:920px){
   .nav-links{display:none;}
   .thesis,.device-grid,.os-grid,.road-body,.foot-grid{grid-template-columns:1fr;gap:32px;}
-  .proof-grid,.loop,.research-grid,.role-grid{grid-template-columns:1fr 1fr;gap:26px;}
+  .proof-grid,.loop,.research-grid,.role-grid,.kit-cols,.q-grid{grid-template-columns:1fr 1fr;gap:26px;}
+  .kit-lead{grid-template-columns:1fr;gap:30px;}
   .loop-step .arrow{display:none;}
   section{padding:84px 0;}
   .cta-box{padding:32px;}
 }
 @media (max-width:560px){
-  .proof-grid,.loop,.research-grid,.role-grid,.field-row{grid-template-columns:1fr;}
+  .proof-grid,.loop,.research-grid,.role-grid,.field-row,.kit-cols,.q-grid{grid-template-columns:1fr;}
   .foot-cols{grid-template-columns:1fr 1fr;}
   .nav-cta .btn-ghost{display:none;}
 }
@@ -356,12 +393,16 @@ footer .brand{color:#fff;margin-bottom:18px;}
   </a>
   <div class="nav-links">
     <a href="#thesis">Thesis</a>
+    <a href="#kit">The Kit</a>
     <a href="#device">The Device</a>
     <a href="#research">Research</a>
     <a href="#roadmap">Roadmap</a>
     <a href="#opensource">Open Source</a>
   </div>
   <div class="nav-cta">
+    <a href="https://github.com/zoraizmohammad/qadam" class="icon-link" target="_blank" rel="noopener" aria-label="Qadam on GitHub" title="View the repo on GitHub">
+      <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+    </a>
     <a href="#opensource" class="btn btn-ghost">View the work</a>
     <a href="#involved" class="btn btn-primary">Get involved →</a>
   </div>
@@ -375,12 +416,12 @@ footer .brand{color:#fff;margin-bottom:18px;}
 <!-- HERO -->
 <section id="hero" class="irid">
   <div class="wrap">
-    <div class="eyebrow reveal">Open-source frontier lab · accessible medical tech</div>
-    <h1 class="reveal d1">A prosthetic limb for <span class="it">everyone left out.</span></h1>
-    <p class="hero-sub reveal d2">Qadam is a non-profit research lab building <b>affordable, field-deployable</b> prosthetic and medical technology for refugees and the world's underserved. Our core move: put the intelligence in software, and make the hardware <b>dumb, cheap, and nearly unbreakable.</b></p>
+    <div class="eyebrow reveal">Accessible biotech venture · open hardware</div>
+    <h1 class="reveal d1">A prosthetics clinic <span class="it">in a case.</span></h1>
+    <p class="hero-sub reveal d2">Qadam packs an entire fitting clinic into one portable, solar-powered case — a phone, the tools, and the standardized parts to <b>custom-fit 15–20 prosthetic limbs</b> anywhere, plus the open IP to make more. The intelligence lives in the fitting; the limb the patient keeps is <b>robust, low-cost, and purely mechanical.</b></p>
     <div class="hero-actions reveal d3">
-      <a href="#device" class="btn btn-primary">Explore the device →</a>
-      <a href="#research" class="btn btn-ghost">Read the research agenda</a>
+      <a href="#kit" class="btn btn-primary">See what's in the case →</a>
+      <a href="#device" class="btn btn-ghost">Explore the device</a>
     </div>
   </div>
 </section>
@@ -402,15 +443,15 @@ footer .brand{color:#fff;margin-bottom:18px;}
   <div class="wrap">
     <div class="sec-head reveal">
       <div class="eyebrow">01 — The thesis</div>
-      <h2>Move the intelligence into software. Make the hardware dumb.</h2>
-      <p>The reason high-tech prosthetics don't reach a refugee camp isn't the limb — it's everything around it: the clinician, the lab, the power, the supply chain. Qadam's architecture attacks that. Every smart, fragile, expensive component lives in a phone you already own. What we ship to the field is cheap, rugged, and reusable.</p>
+      <h2>Put the intelligence in the fitting. Keep the limb robust.</h2>
+      <p>The reason high-tech prosthetics don't reach a refugee camp isn't the limb — it's everything around it: the clinician, the lab, the power, the supply chain. Qadam's architecture attacks that. Every smart, fragile, expensive component lives in the fitting tech inside the case — never in the limb itself. What the patient walks away with is robust, low-cost, and purely mechanical: nothing to charge, brick, or break.</p>
     </div>
     <div class="thesis">
       <div class="eq reveal">
-        <div class="eq-line"><span class="eq-chip smart">Smartphone app</span><span class="eq-op">+</span><span class="eq-chip dumb">dumb hardware</span></div>
-        <div class="eq-line" style="font-size:15.5px;color:var(--ink-dim);padding-left:4px;margin-bottom:22px;">All scanning, computation, fit-checking and guidance run on a device the user already carries. The tool in the tent has no electronics to break, no firmware to update, and nothing to calibrate against a cloud.</div>
-        <div class="eq-line"><span class="eq-chip dumb">Reusable former</span><span class="eq-op">+</span><span class="eq-chip smart">cheap consumable</span></div>
-        <div class="eq-line" style="font-size:15.5px;color:var(--ink-dim);padding-left:4px;">One durable, reconfigurable tool serves hundreds of patients. The only per-patient cost is a sheet of thermoplastic. That durables/consumables split is the economic engine of the entire project.</div>
+        <div class="eq-line"><span class="eq-chip smart">Smart fitting tech</span><span class="eq-op">+</span><span class="eq-chip dumb">robust mechanical limb</span></div>
+        <div class="eq-line" style="font-size:15.5px;color:var(--ink-dim);padding-left:4px;margin-bottom:22px;">All scanning, computation, fit-checking and guidance run on the phone and reusable sensors inside the case. The limb the patient keeps has no electronics to break, no firmware to update, and nothing to calibrate against a cloud.</div>
+        <div class="eq-line"><span class="eq-chip dumb">Reusable fitting kit</span><span class="eq-op">+</span><span class="eq-chip smart">low-cost consumables</span></div>
+        <div class="eq-line" style="font-size:15.5px;color:var(--ink-dim);padding-left:4px;">One durable, reconfigurable toolkit serves patient after patient. The only per-patient cost is the standardized parts that get built into each limb. That durables/consumables split is the economic engine of the entire project.</div>
       </div>
       <div class="thesis-card glass reveal d2">
         <div class="split-row">
@@ -436,11 +477,76 @@ footer .brand{color:#fff;margin-bottom:18px;}
   </div>
 </section>
 
+<!-- THE KIT (iridescent) -->
+<section id="kit" class="irid">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="eyebrow">02 — What's in the case</div>
+      <h2>One case. A whole prosthetics clinic.</h2>
+      <p>Qadam isn't a single limb — it's a deployable system. One ruggedized, solar-powered case carries everything to turn any room into a fitting clinic and produce <b>15–20 complete below-knee fittings</b> before it needs a resupply of standardized parts. It splits into three layers: the reusable fitting tech that lives in the case forever, the per-patient parts that get built into each limb, and the power to run it all off-grid.</p>
+    </div>
+
+    <div class="kit-lead">
+      <div class="kit-cols" style="grid-template-columns:1fr;gap:0;">
+        <p style="font-size:17px;color:var(--ink-2);max-width:60ch;line-height:1.6;">The credibility of the whole system rests on one honest distinction: <b>what's reusable versus what's consumed.</b> The fitting technology is permanent — it fits patient after patient. Only the standardized building blocks deplete. So the real claim isn't "15–20 limbs in a box," it's <b>"the reusable fitting tech plus consumables for 15–20 custom fittings"</b> — and resupply is just a refill.</p>
+      </div>
+      <div class="case-vis glass">
+        <div class="case-row"><span class="ci"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="6" width="18" height="13" rx="2" stroke="#15161b" stroke-width="1.5"/><path d="M9 6V4h6v2" stroke="#15161b" stroke-width="1.5"/></svg></span> Wheeled / backpack-able hard case, foam-cut inserts</div>
+        <div class="case-row"><span class="ci"><svg viewBox="0 0 24 24" fill="none"><rect x="7" y="2" width="10" height="20" rx="2" stroke="#15161b" stroke-width="1.5"/><path d="M11 18h2" stroke="#15161b" stroke-width="1.5" stroke-linecap="round"/></svg></span> Phone / rugged tablet — the offline brain</div>
+        <div class="case-row"><span class="ci"><svg viewBox="0 0 24 24" fill="none"><path d="M4 9h16v7H4z" stroke="#15161b" stroke-width="1.5"/><path d="M8 9V5h8v4M2 19h20" stroke="#15161b" stroke-width="1.5" stroke-linecap="round"/></svg></span> Foldable solar panel + power bank</div>
+        <div class="case-meta">CAPACITY · reusable fitting tech + consumables for 15–20 fittings · resupply = refill standardized parts</div>
+      </div>
+    </div>
+
+    <div class="kit-cols">
+      <div class="kit-card glass reveal d1">
+        <span class="ktag">Layer 01 · reusable</span>
+        <h4>The fitting toolkit</h4>
+        <p class="ksub">Lives in the case forever. Sanitized between patients.</p>
+        <ul class="kit-list">
+          <li><b>Phone / rugged tablet</b> running the offline technician app</li>
+          <li><b>Pressure-mapping sleeve</b> — shows where the socket will bear load or rub</li>
+          <li><b>Gait / alignment pad</b> — a few steps captures alignment data</li>
+          <li><b>Measurement kit</b> — tape, calipers, phone-based limb scanner</li>
+          <li><b>Reconfigurable fitting jig</b> — dials in socket shape without a 3D printer</li>
+          <li><b>Hand tools</b> — low-power heat gun, cutters, files, torque key</li>
+          <li><b>Sanitation supplies</b> for safe, repeated use</li>
+        </ul>
+      </div>
+      <div class="kit-card glass reveal d2">
+        <span class="ktag">Layer 02 · per-patient</span>
+        <h4>The consumables</h4>
+        <p class="ksub">What actually gets built into each person's limb. This is what depletes — sized for 15–20 builds.</p>
+        <ul class="kit-list">
+          <li><b>Modular socket blanks</b> in standard sizes (S / M / L)</li>
+          <li><b>Standardized pylon tubes</b> — cut to length on site</li>
+          <li><b>Modular feet / ankle units</b> in a few sizes and stiffnesses</li>
+          <li><b>Liners &amp; cushioning</b> — the soft interface (most-consumed item)</li>
+          <li><b>Adapters, clamps &amp; fasteners</b> — the modular connective tissue</li>
+          <li><b>Suspension straps &amp; hardware</b></li>
+        </ul>
+      </div>
+      <div class="kit-card glass reveal d3">
+        <span class="ktag">Layer 03 · power &amp; logistics</span>
+        <h4>Off-grid &amp; travelable</h4>
+        <p class="ksub">Everything needed to run, pack, and resupply in the field.</p>
+        <ul class="kit-list">
+          <li><b>Foldable solar panel + power bank</b> — charges phone, heat gun, scanner</li>
+          <li><b>The case itself</b> — rugged, foam-cut so every part has a home</li>
+          <li><b>At-a-glance inventory</b> — see what's been used up</li>
+          <li><b>Offline IP on the device</b> — build instructions &amp; parametric templates</li>
+          <li><b>Quick-start &amp; resupply card</b></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- DEVICE (dark) -->
 <section id="device" class="sec-dark">
   <div class="wrap">
     <div class="sec-head reveal">
-      <div class="eyebrow">02 — Flagship device</div>
+      <div class="eyebrow">03 — Flagship device</div>
       <h2>The reconfigurable socket mold-former</h2>
       <p>The socket — the cup that joins limb to prosthetic — is the make-or-break interface. Get it wrong and the patient gets skin breakdown and abandons the device. Our former is a single reusable tool that takes a digital limb model and physically reshapes itself into the mold for a perfectly rectified socket.</p>
     </div>
@@ -466,7 +572,7 @@ footer .brand{color:#fff;margin-bottom:18px;}
         <div class="spec"><span class="n">A</span><div><h4>Reduced-DOF staves, not a pin array</h4><p>A handful of flexible longitudinal staves with a membrane stretched over them — clustered where rectification gradients are steepest. Limbs are smooth, so ~30–50 hand-set controls capture the geometry that hundreds of actuated pins would, at a fraction of the cost and failure surface.</p></div></div>
         <div class="spec"><span class="n">B</span><div><h4>Drape-and-wrap forming</h4><p>Modest external compression over a heated sheet, instead of full vacuum. It sidesteps membrane sag, the sealing problem, and venting through the skin — the topology's real engineering trap.</p></div></div>
         <div class="spec"><span class="n">C</span><div><h4>Designed-in recalibration</h4><p>A documented re-zero procedure and a physical reference master the technician periodically forms against. Backlash and zero-drift are treated as a maintenance reality, not an afterthought.</p></div></div>
-        <div class="spec"><span class="n">D</span><div><h4>Dumb by design</h4><p>No electronics in the tool itself. Nothing to brick, no battery, no firmware. Field-repairable with basic parts.</p></div></div>
+        <div class="spec"><span class="n">D</span><div><h4>Robust by design</h4><p>No electronics in the tool itself. Nothing to brick, no battery, no firmware. Field-serviceable with basic parts and built to outlast the conditions.</p></div></div>
       </div>
     </div>
   </div>
@@ -476,7 +582,7 @@ footer .brand{color:#fff;margin-bottom:18px;}
 <section id="loop">
   <div class="wrap">
     <div class="sec-head reveal">
-      <div class="eyebrow">03 — The fitting loop</div>
+      <div class="eyebrow">04 — The fitting loop</div>
       <h2>From scan to fitted socket — without a prosthetist in the tent</h2>
       <p>The check-socket loop is the cleverest part of the system: a fast, transparent, off-grid trial that lets the rectification be iterated before any definitive socket is committed.</p>
     </div>
@@ -512,9 +618,9 @@ footer .brand{color:#fff;margin-bottom:18px;}
 <section id="research" class="sec-dark">
   <div class="wrap">
     <div class="sec-head reveal">
-      <div class="eyebrow">04 — Research agenda</div>
+      <div class="eyebrow">05 — Research agenda</div>
       <h2>The open questions we're answering first</h2>
-      <p>Frontier engineering means being honest about what's unproven. These are the load-bearing assumptions — ranked by how likely they are to kill the concept — that our research program is built to settle before any hardware is cut or any human is fitted.</p>
+      <p>We're a venture, not a lab — but building something this load-bearing means being honest about what's unproven. These are the assumptions — ranked by how likely they are to kill the concept — that our research settles before any hardware is cut or any human is fitted. Every fitting we do feeds the data that answers the next one.</p>
     </div>
     <div class="research-grid">
       <div class="rcard glass reveal d1"><div class="glowline"></div>
@@ -561,9 +667,9 @@ footer .brand{color:#fff;margin-bottom:18px;}
 <section id="roadmap">
   <div class="wrap">
     <div class="sec-head reveal">
-      <div class="eyebrow">05 — Roadmap</div>
+      <div class="eyebrow">06 — Roadmap</div>
       <h2>From a laptop study to deployed open hardware</h2>
-      <p>De-risked in the right order: the cheapest, most decision-relevant tests come first. A bad result on V1's fidelity study kills the concept before a dollar of hardware time is spent.</p>
+      <p>De-risked in the right order: the lowest-cost, most decision-relevant tests come first. A bad result on V1's fidelity study kills the concept before a dollar of hardware time is spent.</p>
     </div>
     <div class="road-tabs reveal">
       <div class="road-tab active" data-road="v1"><span class="v">VERSION 1</span>Prove the geometry</div>
@@ -577,7 +683,7 @@ footer .brand{color:#fff;margin-bottom:18px;}
           <span class="phase">PHASE · BENCH &amp; SIMULATION</span>
           <h3>V1 — Prove the geometry</h3>
           <div class="horizon">Horizon: months 0–9 · lab only, no patients</div>
-          <p>Establish that the stave-and-membrane concept can represent a clinically acceptable surface, and build the first dumb former + check-socket loop on the bench.</p>
+          <p>Establish that the stave-and-membrane concept can represent a clinically acceptable surface, and build the first robust, electronics-free former + check-socket loop on the bench.</p>
         </div>
         <div class="milestones reveal d2">
           <div class="ms"><div class="dot"></div><div><h4>Software fidelity study</h4><p>Error heat-maps over real rectified scans. Sweep stave count, placement, control points. Go/no-go gate for the whole concept.</p></div></div>
@@ -628,7 +734,7 @@ footer .brand{color:#fff;margin-bottom:18px;}
 <section id="opensource" class="sec-dark">
   <div class="wrap">
     <div class="sec-head reveal">
-      <div class="eyebrow">06 — Open source</div>
+      <div class="eyebrow">07 — Open source</div>
       <h2>Built in the open, manufacturable anywhere</h2>
       <p>A device that can't be repaired or reproduced locally fails the people it's meant to serve. Everything — hardware, software, methods, and the honest negative results — is published openly so anyone, anywhere can build, fix, audit, and improve it.</p>
     </div>
@@ -667,6 +773,55 @@ footer .brand{color:#fff;margin-bottom:18px;}
       <div>
         <h3>What could stop us — said plainly</h3>
         <p>The mechatronics are tractable. The real gating risk is clinical: a non-expert producing a load-bearing socket without a prosthetist present is a significant safety claim, and the safety loop that's meant to justify it is unproven. We won't let the engineering elegance of the former pull focus from validating that loop — because that's what a pilot, a funder, and a regulator will rightly interrogate. A certified prosthetist is involved before any human is fitted. We publish our negative results too.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- OPEN PROBLEMS -->
+<section id="problems">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="eyebrow">08 — Open problems</div>
+      <h2>The hard questions we're actually solving</h2>
+      <p>The mechatronics are the easy part. What makes Qadam a real research problem — not just an engineering build — is a cluster of coupled questions in geometry, mechanics, and human factors that decide whether a non-expert can produce a clinically sound socket at all. These are the ones we're working through first.</p>
+    </div>
+    <div class="q-grid">
+      <div class="qcard glass reveal d1"><div class="qline"></div>
+        <span class="qn">Q-01 · geometry, before any metal</span>
+        <h4>Can the topology hit a millimeter-class target — in software alone?</h4>
+        <p>Sample real rectified transtibial scans as N stave curves, loft a surface, relax it between staves to model the skin, and compute a residual-error heat-map. A pure-software study that answers — for free, on a laptop — whether the concept can even represent a clinically acceptable surface before a dollar of hardware is spent.</p>
+        <span class="qtag">surface error · DOF sweep</span>
+      </div>
+      <div class="qcard glass reveal d2"><div class="qline"></div>
+        <span class="qn">Q-02 · the coupled dilemma</span>
+        <h4>Can a tensioned skin stay smooth without distorting the staves?</h4>
+        <p>Sag scales as (span² × pressure) / (tension × thickness). Tension high enough to kill sag across a 3–4 cm circumferential gap is also high enough to pull the stave tips inward — so the membrane can't be both taut and non-distorting at once. We're characterizing where that trade-off actually lands.</p>
+        <span class="qtag">membrane mechanics</span>
+      </div>
+      <div class="qcard glass reveal d3"><div class="qline"></div>
+        <span class="qn">Q-03 · the material fork</span>
+        <h4>A bending-skin or a stretch elastomer?</h4>
+        <p>A thin constant-thickness sheet (spring shim, PETG, Delrin) resists local sag by bending stiffness rather than tension — and limbs are smooth, the regime where a bending skin wins. We coupon-test both against forming pressure and heat instead of defaulting to elastomer.</p>
+        <span class="qtag">coupon test</span>
+      </div>
+      <div class="qcard glass reveal d1"><div class="qline"></div>
+        <span class="qn">Q-04 · resolution vs. anatomy</span>
+        <h4>Can 8–12 circumferential samples capture a 2–3 cm fibular-head relief?</h4>
+        <p>The features that prevent skin breakdown are localized — fibular head, tibial crest, tibial tubercle, distal bone ends. We're deriving non-uniform stave layouts (dense anterolaterally, sparse posteriorly) from where real rectifications put their sharpest gradients.</p>
+        <span class="qtag">clinical · placement</span>
+      </div>
+      <div class="qcard glass reveal d2"><div class="qline"></div>
+        <span class="qn">Q-05 · the forming method</span>
+        <h4>Drape-and-wrap or vacuum?</h4>
+        <p>Vacuum through a sealed skin needs vents that fight the smooth-surface goal, and full vacuum loads the membrane hardest. Modest external compression over a heated sheet sidesteps sealing, venting, and sag at once. For this topology we treat it as nearly decided — and we're proving it.</p>
+        <span class="qtag">process</span>
+      </div>
+      <div class="qcard glass reveal d3"><div class="qline"></div>
+        <span class="qn">Q-06 · the silent failure mode</span>
+        <h4>How do we stop a non-expert from making subtly wrong sockets?</h4>
+        <p>Lead screws develop backlash; a technician won't notice slow zero-drift, and setting one stave can nudge its neighbor. We're designing a re-zero procedure, a physical reference master, and a decoupled setting order — then validating realistic timing on non-experts, not on our own team.</p>
+        <span class="qtag">reliability · human factors</span>
       </div>
     </div>
   </div>
@@ -719,7 +874,7 @@ footer .brand{color:#fff;margin-bottom:18px;}
       <div class="role-grid">
         <div class="role"><h4>◆ Engineers</h4><p>Mechanical, geometry-processing, and mobile devs to build the former and the scan-to-settings pipeline.</p></div>
         <div class="role"><h4>◆ Clinicians</h4><p>Prosthetists &amp; O&amp;P researchers to set the accuracy targets, red-flag criteria, and validate fit.</p></div>
-        <div class="role"><h4>◆ Funders</h4><p>Grant-givers and partners backing high-leverage, open, deeply unglamorous frontier work.</p></div>
+        <div class="role"><h4>◆ Funders</h4><p>Grant-givers and partners backing high-leverage, open, deeply practical accessible-biotech work.</p></div>
         <div class="role"><h4>◆ Field partners</h4><p>NGOs and clinics in deployment regions to co-design and host supervised pilots.</p></div>
       </div>
     </div>
@@ -737,13 +892,13 @@ footer .brand{color:#fff;margin-bottom:18px;}
           <span class="mark"><svg viewBox="0 0 32 32" fill="none"><path d="M16 2 L28 9 V23 L16 30 L4 23 V9 Z" stroke="#fff" stroke-width="1.5"/><path d="M16 9 V23 M10 12 L16 16 L22 12 M10 20 L16 16 L22 20" stroke="#fff" stroke-width="1.2" opacity=".5"/></svg></span>
           Qadam
         </a>
-        <p>An open-source frontier lab for accessible prosthetics and well-made, affordable medical technology. <em>Qadam</em> (قدم) — "a step forward."</p>
-        <p class="foot-note" style="margin-top:18px;display:inline-block;">Open hardware · open methods · non-profit</p>
+        <p>An accessible biotech venture putting a whole prosthetics clinic into one portable, solar-powered case — robust, low-cost, open. <em>Qadam</em> (قدم) — "a step forward."</p>
+        <p class="foot-note" style="margin-top:18px;display:inline-block;">Open hardware · open methods · accessible biotech</p>
       </div>
       <div class="foot-cols">
-        <div class="foot-col"><h5>Project</h5><a href="#thesis">Thesis</a><a href="#device">The device</a><a href="#research">Research agenda</a><a href="#roadmap">Roadmap</a></div>
-        <div class="foot-col"><h5>Build</h5><a href="#opensource">Open hardware</a><a href="#opensource">Fitting software</a><a href="#opensource">Methods &amp; data</a><a href="#honesty">Known risks</a></div>
-        <div class="foot-col"><h5>Connect</h5><a href="#involved">Get involved</a><a href="mailto:hello@qadam.org">Contact</a><a href="#involved">For funders</a><a href="#involved">For clinicians</a></div>
+        <div class="foot-col"><h5>Project</h5><a href="#thesis">Thesis</a><a href="#kit">The kit</a><a href="#device">The device</a><a href="#research">Research agenda</a><a href="#roadmap">Roadmap</a></div>
+        <div class="foot-col"><h5>Build</h5><a href="#opensource">Open hardware</a><a href="#opensource">Fitting software</a><a href="#problems">Open problems</a><a href="#honesty">Known risks</a></div>
+        <div class="foot-col"><h5>Connect</h5><a href="https://github.com/zoraizmohammad/qadam" class="icon-link" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>GitHub repo</a><a href="#involved">Get involved</a><a href="mailto:hello@qadam.org">Contact</a><a href="#involved">For funders</a></div>
       </div>
     </div>
     <div class="foot-bottom">
