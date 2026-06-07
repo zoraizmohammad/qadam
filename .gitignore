@@ -39,3 +39,4 @@ tools/nano-banana/mcp.local.json
 generated_imgs/
 nano-banana-images/
 web/index.dark-backup.html
+.vercel
