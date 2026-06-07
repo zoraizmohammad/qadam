@@ -224,6 +224,8 @@ nav.scrolled{background:rgba(244,242,237,.72);backdrop-filter:blur(16px) saturat
 .device-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;}
 .device-vis{position:relative;display:grid;place-items:center;min-height:380px;
   background:radial-gradient(circle at 50% 45%,rgba(194,201,247,.12),transparent 65%);border-radius:24px;}
+.device-render{width:auto;max-width:88%;max-height:460px;height:auto;
+  filter:drop-shadow(0 26px 60px rgba(0,0,0,.6));}
 .device-pill{position:absolute;font-family:'JetBrains Mono';font-size:11px;color:var(--on-black);
   background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);border-radius:100px;padding:6px 12px;backdrop-filter:blur(6px);}
 .dp1{top:14%;left:4%}.dp2{top:30%;right:2%}.dp3{bottom:26%;left:0}.dp4{bottom:10%;right:6%}
@@ -233,6 +235,53 @@ nav.scrolled{background:rgba(244,242,237,.72);backdrop-filter:blur(16px) saturat
   font-family:'Instrument Serif',serif;font-size:18px;color:#fff;border:1px solid rgba(255,255,255,.25);}
 .spec h4{font-size:16px;margin-bottom:6px;color:#fff;}
 .spec p{font-size:14.5px;color:var(--on-black-dim);}
+
+/* ---------- heatmap figure ---------- */
+.heatfig{margin-top:72px;}
+.heatfig-head{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-bottom:8px;}
+.heatfig-head .tag{font-family:'JetBrains Mono';font-size:11px;letter-spacing:.14em;
+  color:var(--p1);text-transform:uppercase;}
+.heatfig-head h3{font-family:'Instrument Serif',serif;font-weight:400;font-size:clamp(22px,3vw,30px);color:#fff;}
+.heatfig-sub{font-size:14.5px;color:var(--on-black-dim);max-width:680px;margin-bottom:34px;}
+.heatfig-stage{display:grid;grid-template-columns:1.35fr 1fr;gap:40px;align-items:center;}
+.heat-canvas{position:relative;border-radius:24px;overflow:hidden;text-align:center;
+  background:radial-gradient(circle at 50% 42%,rgba(164,232,223,.14),rgba(194,201,247,.06) 45%,transparent 70%);
+  border:1px solid rgba(255,255,255,.08);padding:18px;}
+.heat-img-wrap{position:relative;display:inline-block;line-height:0;}
+.heat-canvas img{display:block;width:auto;max-width:100%;max-height:600px;height:auto;filter:drop-shadow(0 24px 60px rgba(0,0,0,.55));}
+.heat-grid-overlay{position:absolute;inset:0;pointer-events:none;
+  background-image:linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px);
+  background-size:40px 40px;mask-image:radial-gradient(circle at 50% 45%,#000 40%,transparent 75%);}
+.hm-marker{position:absolute;width:30px;height:30px;transform:translate(-50%,-50%);
+  border-radius:50%;display:grid;place-items:center;cursor:default;z-index:4;
+  font-family:'JetBrains Mono';font-size:12px;font-weight:600;color:#06231f;
+  background:linear-gradient(135deg,#a4e8df,#c2c9f7);
+  box-shadow:0 0 0 4px rgba(164,232,223,.18),0 4px 14px rgba(0,0,0,.4);}
+.hm-marker::after{content:"";position:absolute;inset:-4px;border-radius:50%;
+  border:1px solid rgba(164,232,223,.5);animation:hmpulse 2.6s ease-out infinite;}
+.hm-marker.warn{background:linear-gradient(135deg,#f9cbd9,#f0a890);color:#3a160f;
+  box-shadow:0 0 0 4px rgba(249,203,217,.2),0 4px 14px rgba(0,0,0,.4);}
+.hm-marker.warn::after{border-color:rgba(249,203,217,.6);}
+@keyframes hmpulse{0%{transform:scale(1);opacity:.8}70%{transform:scale(2.1);opacity:0}100%{opacity:0}}
+.hm-marker .tip{position:absolute;left:50%;bottom:calc(100% + 10px);transform:translateX(-50%);
+  white-space:nowrap;font-family:'Inter';font-weight:500;font-size:11.5px;color:#fff;
+  background:rgba(12,14,20,.92);border:1px solid rgba(255,255,255,.14);border-radius:8px;
+  padding:5px 10px;opacity:0;transition:opacity .2s,transform .2s;pointer-events:none;}
+.hm-marker:hover .tip{opacity:1;transform:translateX(-50%) translateY(-2px);}
+.zoom-stack{display:flex;flex-direction:column;gap:14px;}
+.zoom-card{display:flex;gap:16px;align-items:center;padding:14px;border-radius:18px;
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.09);transition:border-color .25s,background .25s;}
+.zoom-card:hover{border-color:rgba(164,232,223,.4);background:rgba(164,232,223,.05);}
+.zoom-lens{flex-shrink:0;width:78px;height:78px;border-radius:14px;
+  background-image:url('assets/device-heatmap.png');background-size:420%;background-repeat:no-repeat;
+  border:1px solid rgba(255,255,255,.16);box-shadow:inset 0 0 0 1px rgba(0,0,0,.3);}
+.zoom-card .zc-n{font-family:'JetBrains Mono';font-size:10.5px;color:var(--p1);letter-spacing:.08em;margin-bottom:3px;}
+.zoom-card h4{font-size:14.5px;color:#fff;margin-bottom:3px;}
+.zoom-card p{font-size:12.5px;color:var(--on-black-dim);line-height:1.45;}
+.heat-legend{display:flex;align-items:center;gap:18px;margin-top:24px;flex-wrap:wrap;
+  font-family:'JetBrains Mono';font-size:11px;color:var(--on-black-dim);}
+.heat-legend .scale{display:inline-flex;height:10px;width:160px;border-radius:6px;
+  background:linear-gradient(90deg,#3a3f7a,#5fc7b8,#f5e08a,#f0a890,#e85d52);border:1px solid rgba(255,255,255,.14);}
 
 /* ---------- loop ---------- */
 .loop{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;}
@@ -354,7 +403,7 @@ footer .brand{color:#fff;margin-bottom:18px;}
 /* ---------- responsive ---------- */
 @media (max-width:920px){
   .nav-links{display:none;}
-  .thesis,.device-grid,.os-grid,.road-body,.foot-grid{grid-template-columns:1fr;gap:32px;}
+  .thesis,.device-grid,.os-grid,.road-body,.foot-grid,.heatfig-stage{grid-template-columns:1fr;gap:32px;}
   .proof-grid,.loop,.research-grid,.role-grid,.kit-cols,.q-grid{grid-template-columns:1fr 1fr;gap:26px;}
   .kit-lead{grid-template-columns:1fr;gap:30px;}
   .loop-step .arrow{display:none;}
@@ -552,17 +601,7 @@ footer .brand{color:#fff;margin-bottom:18px;}
     </div>
     <div class="device-grid">
       <div class="device-vis reveal" id="staveVis">
-        <svg viewBox="0 0 320 320" width="84%" id="staveSvg">
-          <defs>
-            <linearGradient id="lg" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0" stop-color="#a4e8df"/><stop offset="0.55" stop-color="#c2c9f7"/><stop offset="1" stop-color="#f9cbd9"/>
-            </linearGradient>
-          </defs>
-          <ellipse cx="160" cy="40" rx="90" ry="20" fill="none" stroke="rgba(255,255,255,.16)" stroke-width="1.5"/>
-          <ellipse cx="160" cy="280" rx="55" ry="13" fill="none" stroke="rgba(255,255,255,.16)" stroke-width="1.5"/>
-          <g id="staves"></g>
-          <ellipse cx="160" cy="40" rx="90" ry="20" fill="none" stroke="url(#lg)" stroke-width="2" opacity=".9"/>
-        </svg>
+        <img class="device-render" src="assets/device-former.png" alt="The Qadam reconfigurable socket mold-former: a cage of flexible staves around a residual-limb model, with a reconfigurable rim and hand-set adjustment screws around the base." loading="lazy">
         <div class="device-pill dp1">membrane skin</div>
         <div class="device-pill dp2">~30–50 hand-set controls</div>
         <div class="device-pill dp3">flexible staves</div>
@@ -573,6 +612,53 @@ footer .brand{color:#fff;margin-bottom:18px;}
         <div class="spec"><span class="n">B</span><div><h4>Drape-and-wrap forming</h4><p>Modest external compression over a heated sheet, instead of full vacuum. It sidesteps membrane sag, the sealing problem, and venting through the skin — the topology's real engineering trap.</p></div></div>
         <div class="spec"><span class="n">C</span><div><h4>Designed-in recalibration</h4><p>A documented re-zero procedure and a physical reference master the technician periodically forms against. Backlash and zero-drift are treated as a maintenance reality, not an afterthought.</p></div></div>
         <div class="spec"><span class="n">D</span><div><h4>Robust by design</h4><p>No electronics in the tool itself. Nothing to brick, no battery, no firmware. Field-serviceable with basic parts and built to outlast the conditions.</p></div></div>
+      </div>
+    </div>
+
+    <!-- annotated thermal figure -->
+    <div class="heatfig reveal">
+      <div class="heatfig-head">
+        <span class="tag">Figure 01 · pressure map</span>
+        <h3>How the former reads a residual limb</h3>
+      </div>
+      <p class="heatfig-sub">A thermal render of the socket-former mid-fitting: the staves flex to the rectified target shape while the pressure-mapping skin surfaces where load concentrates. Hover any marker to see what it is; the lenses on the right zoom into each feature.</p>
+      <div class="heatfig-stage">
+        <div class="heat-canvas">
+          <div class="heat-img-wrap">
+            <img src="assets/device-heatmap.png" alt="Thermal pressure map of the Qadam reconfigurable socket-former fitting a residual limb, showing staves, socket wall, and pressure hot-spots." loading="lazy">
+            <div class="heat-grid-overlay"></div>
+            <div class="hm-marker" style="left:51%;top:11%">1<span class="tip">Residual limb (digital model)</span></div>
+            <div class="hm-marker" style="left:30%;top:24%">2<span class="tip">Reconfigured socket wall &amp; rim</span></div>
+            <div class="hm-marker" style="left:80%;top:42%">3<span class="tip">Flexible staves</span></div>
+            <div class="hm-marker warn" style="left:51.4%;top:74.9%">4<span class="tip">Pressure / surface-error hot-spot</span></div>
+            <div class="hm-marker" style="left:50%;top:92%">5<span class="tip">Hand-set adjustment screws</span></div>
+          </div>
+        </div>
+        <div class="zoom-stack">
+          <div class="zoom-card">
+            <div class="zoom-lens" style="background-position:51% 11%"></div>
+            <div><div class="zc-n">01 · input</div><h4>Residual limb</h4><p>The scanned, rectified limb model the former shapes itself around — never the limb itself under load.</p></div>
+          </div>
+          <div class="zoom-card">
+            <div class="zoom-lens" style="background-position:30% 24%"></div>
+            <div><div class="zc-n">02 · interface</div><h4>Socket wall &amp; rim</h4><p>The make-or-break cup geometry. Get the rim and relief zones right and the limb stays comfortable for hours.</p></div>
+          </div>
+          <div class="zoom-card">
+            <div class="zoom-lens" style="background-position:80% 42%"></div>
+            <div><div class="zc-n">03 · mechanism</div><h4>Flexible staves</h4><p>~30–50 longitudinal staves carry the membrane and capture the rectified surface — clustered where gradients are steepest.</p></div>
+          </div>
+          <div class="zoom-card">
+            <div class="zoom-lens" style="background-position:51.4% 74.9%"></div>
+            <div><div class="zc-n">04 · readout</div><h4>Pressure hot-spot</h4><p>The pressure-sensing skin flags concentrated load against clinical thresholds, so a non-expert can iterate before committing a socket.</p></div>
+          </div>
+          <div class="zoom-card">
+            <div class="zoom-lens" style="background-position:50% 92%"></div>
+            <div><div class="zc-n">05 · control</div><h4>Hand-set screws</h4><p>The app prints exact settings; a technician dials them in by hand. No motors, no power needed to shape a limb.</p></div>
+          </div>
+        </div>
+      </div>
+      <div class="heat-legend">
+        <span>relative pressure</span><span class="scale"></span><span>low → high</span>
       </div>
     </div>
   </div>
