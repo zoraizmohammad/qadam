@@ -201,6 +201,44 @@ nav.scrolled{background:rgba(244,242,237,.72);backdrop-filter:blur(16px) saturat
 @keyframes marquee{to{transform:translateX(-50%);}}
 
 /* ---------- the kit (iridescent) ---------- */
+/* case showcase */
+.case-showcase{margin:6px 0 56px;}
+.case-hero{position:relative;display:flex;justify-content:center;margin-bottom:46px;perspective:1300px;}
+.case-open-img{max-width:min(560px,86%);height:auto;transform-style:preserve-3d;
+  filter:drop-shadow(0 46px 90px rgba(20,22,34,.42));animation:caseFloat 8s ease-in-out infinite;}
+@keyframes caseFloat{0%,100%{transform:translateY(0) rotateZ(-.5deg) rotateY(-3.5deg)}
+  50%{transform:translateY(-16px) rotateZ(.5deg) rotateY(3.5deg)}}
+.case-badge{position:absolute;font-family:'JetBrains Mono';font-size:11px;letter-spacing:.04em;color:var(--ink);
+  background:rgba(255,255,255,.72);border:1px solid var(--line);border-radius:100px;padding:7px 14px;
+  backdrop-filter:blur(8px);box-shadow:0 8px 22px rgba(20,22,34,.12);}
+.case-badge.cb1{top:8%;left:6%}.case-badge.cb2{bottom:10%;right:6%}
+.explode-block{margin-top:8px;}
+.eb-head{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-bottom:18px;}
+.eb-head .tag{font-family:'JetBrains Mono';font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#2b7d6e;}
+.eb-head h3{font-family:'Instrument Serif',serif;font-weight:400;font-size:clamp(22px,3vw,30px);color:var(--ink);}
+.ev-stage{position:relative;border-radius:24px;overflow:hidden;padding:22px;
+  background:radial-gradient(circle at 50% 38%,#232733,#13151c 76%);border:1px solid var(--line);
+  box-shadow:0 24px 56px rgba(20,22,34,.16);}
+.ev-frame{position:relative;width:100%;max-width:900px;margin:0 auto;aspect-ratio:919 / 525;}
+.ev-img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;
+  filter:drop-shadow(0 14px 30px rgba(0,0,0,.45));will-change:opacity,transform;}
+.ev-exploded{opacity:0;transform:scale(.94);}
+.ev-markers{position:absolute;inset:0;transition:opacity .2s linear;}
+.ev-control{display:flex;align-items:center;gap:16px;max-width:560px;margin:22px auto 0;}
+.ev-control .evl{font-family:'JetBrains Mono';font-size:11px;letter-spacing:.06em;color:var(--ink-dim);white-space:nowrap;}
+.ev-control input[type=range]{flex:1;-webkit-appearance:none;appearance:none;height:6px;border-radius:100px;
+  background:linear-gradient(90deg,#a4e8df,#c2c9f7,#f9cbd9);outline:none;cursor:pointer;}
+.ev-control input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;
+  background:#fff;border:2px solid #2b7d6e;box-shadow:0 3px 10px rgba(0,0,0,.25);cursor:grab;}
+.ev-control input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;
+  background:#fff;border:2px solid #2b7d6e;box-shadow:0 3px 10px rgba(0,0,0,.25);cursor:grab;}
+.ev-zooms{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:26px;}
+.ev-zooms .zoom-card{background:rgba(255,255,255,.55);border:1px solid var(--line);}
+.ev-zooms .zoom-card:hover{background:rgba(255,255,255,.8);border-color:rgba(43,125,110,.4);}
+.ev-zooms .zoom-card h4{color:var(--ink);}
+.ev-zooms .zoom-card .zc-n{color:#2b7d6e;}
+.ev-zooms .zoom-card p{color:var(--ink-dim);}
+.zoom-lens.cp-lens{background-image:url('assets/case-packed.png');background-size:340%;border-color:var(--line);}
 .kit-lead{display:grid;grid-template-columns:1.1fr .9fr;gap:50px;align-items:start;margin-bottom:48px;}
 .kit-lead .case-vis{padding:30px;border-radius:24px;display:flex;flex-direction:column;gap:16px;}
 .case-row{display:flex;align-items:center;gap:14px;font-size:14px;color:var(--ink-2);}
@@ -418,14 +456,14 @@ footer .brand{color:#fff;margin-bottom:18px;}
 @media (max-width:920px){
   .nav-links{display:none;}
   .thesis,.device-grid,.os-grid,.road-body,.foot-grid,.heatfig-stage{grid-template-columns:1fr;gap:32px;}
-  .proof-grid,.loop,.research-grid,.role-grid,.kit-cols,.q-grid{grid-template-columns:1fr 1fr;gap:26px;}
+  .proof-grid,.loop,.research-grid,.role-grid,.kit-cols,.q-grid,.ev-zooms{grid-template-columns:1fr 1fr;gap:26px;}
   .kit-lead{grid-template-columns:1fr;gap:30px;}
   .loop-step .arrow{display:none;}
   section{padding:84px 0;}
   .cta-box{padding:32px;}
 }
 @media (max-width:560px){
-  .proof-grid,.loop,.research-grid,.role-grid,.field-row,.kit-cols,.q-grid,.mb-compare{grid-template-columns:1fr;}
+  .proof-grid,.loop,.research-grid,.role-grid,.field-row,.kit-cols,.q-grid,.mb-compare,.ev-zooms{grid-template-columns:1fr;}
   .loopfig-cap{font-size:11px;gap:8px;}
   .foot-cols{grid-template-columns:1fr 1fr;}
   .nav-cta .btn-ghost{display:none;}
@@ -548,6 +586,59 @@ footer .brand{color:#fff;margin-bottom:18px;}
       <div class="eyebrow">02 — What's in the case</div>
       <h2>One case. A whole prosthetics clinic.</h2>
       <p>Qadam isn't a single limb — it's a deployable system. One ruggedized, solar-powered case carries everything to turn any room into a fitting clinic and produce <b>15–20 complete below-knee fittings</b> before it needs a resupply of standardized parts. It splits into three layers: the reusable fitting tech that lives in the case forever, the per-patient parts that get built into each limb, and the power to run it all off-grid.</p>
+    </div>
+
+    <!-- interactive case showcase -->
+    <div class="case-showcase reveal">
+      <div class="case-hero">
+        <img class="case-open-img" src="assets/case-open.png" alt="The Qadam fitting case, open — a ruggedized hard case with foam-cut inserts holding a phone, solar panel, hand tools, socket formers and modular limb parts." loading="lazy">
+        <div class="case-badge cb1">Rugged · solar-powered</div>
+        <div class="case-badge cb2">15–20 fittings per kit</div>
+      </div>
+
+      <div class="explode-block">
+        <div class="eb-head">
+          <span class="tag">Interactive · drag to unpack</span>
+          <h3>Everything, exploded</h3>
+        </div>
+        <div class="ev-stage">
+          <div class="ev-frame">
+            <img class="ev-img ev-packed" src="assets/case-packed.png" alt="The open case laid flat, every tool and part seated in its foam cutout." loading="lazy">
+            <img class="ev-img ev-exploded" src="assets/case-exploded.png" alt="The same kit exploded into its individual components floating above the case." loading="lazy">
+            <div class="ev-markers" id="evMarkers">
+              <div class="hm-marker" style="left:10%;top:16%">1<span class="tip">Phone / tablet — the offline brain</span></div>
+              <div class="hm-marker" style="left:34%;top:28%">2<span class="tip">Measurement kit — calipers, tape, scanner</span></div>
+              <div class="hm-marker" style="left:43%;top:42%">3<span class="tip">Low-power forming heat gun</span></div>
+              <div class="hm-marker" style="left:74%;top:15%">4<span class="tip">Reconfigurable socket formers</span></div>
+              <div class="hm-marker" style="left:88%;top:33%">5<span class="tip">Modular pylons, feet &amp; adapters</span></div>
+              <div class="hm-marker warn" style="left:72%;top:82%">6<span class="tip">Foldable solar + power bank</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="ev-control">
+          <span class="evl">Packed</span>
+          <input type="range" min="0" max="100" value="0" id="explodeRange" aria-label="Unpack the case from packed to exploded">
+          <span class="evl">Exploded</span>
+        </div>
+        <div class="ev-zooms">
+          <div class="zoom-card">
+            <div class="zoom-lens cp-lens" style="background-position:10% 16%"></div>
+            <div><div class="zc-n">01 · brain</div><h4>Phone / tablet</h4><p>Runs the offline fitting app — scan, settings, check-socket read. No cloud, no signal needed.</p></div>
+          </div>
+          <div class="zoom-card">
+            <div class="zoom-lens cp-lens" style="background-position:43% 42%"></div>
+            <div><div class="zc-n">02 · forming</div><h4>Heat gun</h4><p>Low-power forming of the check-socket sheet. The one step that draws on the battery.</p></div>
+          </div>
+          <div class="zoom-card">
+            <div class="zoom-lens cp-lens" style="background-position:74% 15%"></div>
+            <div><div class="zc-n">03 · reusable</div><h4>Socket formers</h4><p>Reconfigurable formers in standard sizes — the permanent fitting tech that serves patient after patient.</p></div>
+          </div>
+          <div class="zoom-card">
+            <div class="zoom-lens cp-lens" style="background-position:72% 82%"></div>
+            <div><div class="zc-n">04 · power</div><h4>Solar &amp; power bank</h4><p>Foldable panel plus a bank — enough to run an entire fitting clinic fully off-grid.</p></div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <div class="kit-lead">
@@ -1119,6 +1210,39 @@ const io=new IntersectionObserver((es)=>{
   es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});
 },{threshold:.12,rootMargin:'0px 0px -8% 0px'});
 document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+/* ---------- case explode scrubber ---------- */
+(function(){
+  const range=document.getElementById('explodeRange');
+  if(!range)return;
+  const packed=document.querySelector('.ev-packed'),
+        exploded=document.querySelector('.ev-exploded'),
+        markers=document.getElementById('evMarkers');
+  function apply(t){ // t in 0..1
+    if(packed)packed.style.opacity=(1-t).toFixed(3);
+    if(exploded){exploded.style.opacity=t.toFixed(3);exploded.style.transform='scale('+(0.94+0.06*t).toFixed(3)+')';}
+    if(markers)markers.style.opacity=(1-Math.min(1,t*1.6)).toFixed(3);
+  }
+  range.addEventListener('input',()=>apply(range.value/100));
+  apply(0);
+  // one-time auto demo when scrolled into view
+  if(!REDUCE){
+    const stage=document.querySelector('.ev-stage');
+    let played=false;
+    const dio=new IntersectionObserver((es)=>{es.forEach(e=>{
+      if(e.isIntersecting && !played){played=true;dio.disconnect();
+        const t0=performance.now(),dur=2600;
+        (function step(now){
+          let p=(now-t0)/dur; if(p>1)p=1;
+          // ease out-and-back: 0 -> 1 -> 0
+          const v=Math.sin(p*Math.PI); // 0..1..0
+          range.value=Math.round(v*72); apply(v*0.72);
+          if(p<1)requestAnimationFrame(step); else {range.value=0;apply(0);}
+        })(t0);
+      }});},{threshold:.4});
+    dio.observe(stage);
+  }
+})();
 
 /* ---------- count-up stats ---------- */
 const counters=document.querySelectorAll('.num[data-target]');
