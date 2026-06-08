@@ -282,8 +282,22 @@ nav.scrolled{background:rgba(244,242,237,.72);backdrop-filter:blur(16px) saturat
   font-family:'JetBrains Mono';font-size:11px;color:var(--on-black-dim);}
 .heat-legend .scale{display:inline-flex;height:10px;width:160px;border-radius:6px;
   background:linear-gradient(90deg,#3a3f7a,#5fc7b8,#f5e08a,#f0a890,#e85d52);border:1px solid rgba(255,255,255,.14);}
+.heat-legend .scale.dens{background:linear-gradient(90deg,rgba(164,232,223,.25),#c2c9f7,#dcc6f0,#f9cbd9);}
+.xsec-stage{grid-template-columns:1fr 1.35fr;}
+.zoom-lens.xs-lens{background-image:url('assets/stave-xsection.png');background-size:300%;}
+.mb-compare{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:22px;}
+.zoom-lens.mb-lens{background-image:url('assets/membrane-sag.png');background-size:260%;}
 
 /* ---------- loop ---------- */
+.loopfig{margin:8px 0 46px;}
+.loopfig-canvas{position:relative;border-radius:24px;padding:22px 18px;overflow:hidden;
+  background:radial-gradient(circle at 50% 38%,#222632,#14161d 72%);
+  border:1px solid var(--line);box-shadow:0 22px 54px rgba(0,0,0,.14);}
+.loopfig-canvas img{display:block;width:100%;height:auto;filter:drop-shadow(0 10px 24px rgba(0,0,0,.4));}
+.loopfig-cap{display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap;margin-top:18px;
+  font-family:'JetBrains Mono';font-size:12px;color:var(--ink-dim);}
+.loopfig-cap b{color:var(--ink);font-weight:600;margin-right:5px;}
+.loopfig-cap .ar{color:var(--ink-faint);}
 .loop{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;}
 .loop-step{padding:26px;position:relative;border-radius:20px;}
 .loop-step .step-n{font-family:'JetBrains Mono';font-size:11px;letter-spacing:.12em;color:var(--ink-faint);margin-bottom:14px;}
@@ -411,7 +425,8 @@ footer .brand{color:#fff;margin-bottom:18px;}
   .cta-box{padding:32px;}
 }
 @media (max-width:560px){
-  .proof-grid,.loop,.research-grid,.role-grid,.field-row,.kit-cols,.q-grid{grid-template-columns:1fr;}
+  .proof-grid,.loop,.research-grid,.role-grid,.field-row,.kit-cols,.q-grid,.mb-compare{grid-template-columns:1fr;}
+  .loopfig-cap{font-size:11px;gap:8px;}
   .foot-cols{grid-template-columns:1fr 1fr;}
   .nav-cta .btn-ghost{display:none;}
 }
@@ -661,6 +676,77 @@ footer .brand{color:#fff;margin-bottom:18px;}
         <span>relative pressure</span><span class="scale"></span><span>low → high</span>
       </div>
     </div>
+
+    <!-- cross-section topology figure -->
+    <div class="heatfig reveal">
+      <div class="heatfig-head">
+        <span class="tag">Figure 02 · stave topology</span>
+        <h3>Why a few staves beat a wall of pins</h3>
+      </div>
+      <p class="heatfig-sub">A transtibial cross-section. The control points ring the limb but cluster where the surface bends hardest — over the tibial crest and around the fibula head — and thin out across the broad, forgiving posterior. A handful of well-placed staves capture the geometry hundreds of uniform pins would, for a fraction of the cost.</p>
+      <div class="heatfig-stage xsec-stage">
+        <div class="zoom-stack">
+          <div class="zoom-card">
+            <div class="zoom-lens xs-lens" style="background-position:56.5% 34.4%"></div>
+            <div><div class="zc-n">01 · anatomy</div><h4>Tibia</h4><p>The large weight path. Mapped for relief, not pressure — load it wrong and the crest is the first place the skin breaks down.</p></div>
+          </div>
+          <div class="zoom-card">
+            <div class="zoom-lens xs-lens" style="background-position:25.4% 52.6%"></div>
+            <div><div class="zc-n">02 · anatomy</div><h4>Fibula head</h4><p>A sharp, pressure-sensitive prominence. Needs dense control nearby to carve precise relief around it.</p></div>
+          </div>
+          <div class="zoom-card">
+            <div class="zoom-lens xs-lens" style="background-position:9% 52%"></div>
+            <div><div class="zc-n">03 · strategy</div><h4>Clustered control</h4><p>Staves bunch where curvature gradients are steepest — that's where a millimeter of error actually matters.</p></div>
+          </div>
+          <div class="zoom-card">
+            <div class="zoom-lens xs-lens" style="background-position:34% 60%"></div>
+            <div><div class="zc-n">04 · readout</div><h4>Relief mapping</h4><p>The iridescent zones are where the model offloads pressure into tolerant tissue instead of bone.</p></div>
+          </div>
+        </div>
+        <div class="heat-canvas">
+          <div class="heat-img-wrap">
+            <img src="assets/stave-xsection.png" alt="Transtibial cross-section showing the residual limb soft tissue, tibia and fibula bone sections, a ring of stave control points clustered at high-curvature zones, and iridescent pressure-relief mapping." loading="lazy">
+            <div class="heat-grid-overlay"></div>
+            <div class="hm-marker" style="left:56.5%;top:34.4%">1<span class="tip">Tibia (mapped for relief)</span></div>
+            <div class="hm-marker" style="left:25.4%;top:52.6%">2<span class="tip">Fibula head</span></div>
+            <div class="hm-marker" style="left:92%;top:48%">3<span class="tip">Stave control ring</span></div>
+            <div class="hm-marker" style="left:9%;top:52%">4<span class="tip">Clustered at high-gradient zones</span></div>
+            <div class="hm-marker warn" style="left:34%;top:60%">5<span class="tip">Pressure-relief mapping</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="heat-legend">
+        <span>control-point density</span><span class="scale dens"></span><span>sparse → clustered</span>
+      </div>
+    </div>
+
+    <!-- membrane sag dilemma figure -->
+    <div class="heatfig reveal">
+      <div class="heatfig-head">
+        <span class="tag">Figure 03 · membrane forming</span>
+        <h3>The sag trap — and the way around it</h3>
+      </div>
+      <p class="heatfig-sub">Stretch a heated sheet over the staves and pull a vacuum and it sags between supports, smearing the geometry you worked to capture (left). Our route is drape-and-wrap: modest external compression that pulls the membrane taut and even across the staves, without the sealing and venting problems of full vacuum (right).</p>
+      <div class="heat-canvas">
+        <div class="heat-img-wrap">
+          <img src="assets/membrane-sag.png" alt="Two-panel comparison: on the left a membrane sags between two stave posts under vacuum pull; on the right the membrane is taut and even using drape-and-wrap compression." loading="lazy">
+          <div class="hm-marker warn" style="left:23%;top:66%">1<span class="tip">Vacuum pull → membrane sags between staves</span></div>
+          <div class="hm-marker" style="left:9%;top:40%">2<span class="tip">Flexible stave post</span></div>
+          <div class="hm-marker" style="left:74%;top:45%">3<span class="tip">Drape-and-wrap → taut, even surface</span></div>
+          <div class="hm-marker" style="left:62%;top:40%">4<span class="tip">Tensioned skin holds the form</span></div>
+        </div>
+      </div>
+      <div class="mb-compare">
+        <div class="zoom-card">
+          <div class="zoom-lens mb-lens" style="background-position:23% 66%"></div>
+          <div><div class="zc-n">✕ · the trap</div><h4>Vacuum sag</h4><p>Between supports the sheet droops under its own pull — exactly where a millimeter of error costs comfort. Sealing and venting through the skin make it worse.</p></div>
+        </div>
+        <div class="zoom-card">
+          <div class="zoom-lens mb-lens" style="background-position:74% 45%"></div>
+          <div><div class="zc-n">✓ · our route</div><h4>Drape-and-wrap</h4><p>Light external compression keeps the membrane taut and faithful to the staves — no full vacuum, no sealing problem, no venting trap.</p></div>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -672,6 +758,24 @@ footer .brand{color:#fff;margin-bottom:18px;}
       <h2>From scan to fitted socket — without a prosthetist in the tent</h2>
       <p>The check-socket loop is the cleverest part of the system: a fast, transparent, off-grid trial that lets the rectification be iterated before any definitive socket is committed.</p>
     </div>
+
+    <!-- loop flow banner -->
+    <figure class="loopfig reveal">
+      <div class="loopfig-canvas">
+        <img src="assets/fitting-loop.png" alt="The four-stage Qadam fitting loop: phone scan of the limb, heat-and-form the sheet, a check-socket pressure trial on the leg, then finishing the definitive socket with a heat gun." loading="lazy">
+        <div class="hm-marker" style="left:12%;top:46%">1<span class="tip">Scan — phone capture, off-grid</span></div>
+        <div class="hm-marker warn" style="left:38%;top:46%">2<span class="tip">Heat &amp; form the sheet — needs power</span></div>
+        <div class="hm-marker" style="left:63%;top:40%">3<span class="tip">Check-socket trial — read pressure, off-grid</span></div>
+        <div class="hm-marker warn" style="left:87%;top:52%">4<span class="tip">Finish the socket — heat gun, needs power</span></div>
+      </div>
+      <figcaption class="loopfig-cap">
+        <span><b>01</b> Scan</span><span class="ar">→</span>
+        <span><b>02</b> Heat &amp; form</span><span class="ar">→</span>
+        <span><b>03</b> Check-socket trial</span><span class="ar">→</span>
+        <span><b>04</b> Finish</span>
+      </figcaption>
+    </figure>
+
     <div class="loop">
       <div class="loop-step glass reveal d1">
         <div class="step-n">STEP 01</div><h4>Scan</h4>
