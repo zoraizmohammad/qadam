@@ -1,5 +1,10 @@
 # Supabase contact form
 
+**Current status:** This is a prepared backend for possible future use. The
+website currently has no contact form, and no Qadam Supabase project has been
+created. The account reached its active free-project limit. Provisioning and
+frontend connection are deferred.
+
 The website submits enquiries to a public Supabase Edge Function named `contact`.
 The function validates the request and writes to `public.qadam_contact_messages`
 through a service-only database function. Visitors cannot read, edit, or insert

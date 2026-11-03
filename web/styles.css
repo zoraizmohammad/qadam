@@ -105,20 +105,10 @@ strong{font-weight:700}
 .contact{background:#e8ede5;border-top:1px solid #ccd6ca}
 .contact-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:11%}
 .contact h2{max-width:10ch;margin-bottom:24px}
-.contact-address{margin-top:28px;font-size:.89rem}
-.contact-address a{text-decoration:underline;text-underline-offset:4px}
 .contact-card{background:white;border:1px solid #cbd6c9;padding:clamp(24px,4vw,42px)}
-.contact-card label{display:block;font-size:.77rem;font-weight:700;margin:0 0 7px}
-.contact-card input,.contact-card select,.contact-card textarea{width:100%;background:#fff;border:1px solid #aabbb0;border-radius:0;color:var(--ink);padding:11px 12px;margin:0 0 18px}
-.contact-card textarea{resize:vertical}
-.contact-card input:focus,.contact-card select:focus,.contact-card textarea:focus{border-color:var(--accent)}
-.form-row{display:grid;grid-template-columns:1fr 1fr;gap:15px}
-.honeypot{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
-.form-status{font-size:.88rem;margin-top:14px;min-height:1.4em}
-.form-status.error{color:#a12e20}
-.form-status.success{color:#196443}
 .fallback-label{color:var(--accent)!important;margin-bottom:20px}
-#contact-fallback .button{margin-top:30px}
+.contact-card-simple .button{margin-top:30px}
+.email-address{font-size:.8rem;overflow-wrap:anywhere;margin-top:18px!important}
 .site-footer{background:#10221c;color:white;padding:55px 0 25px}
 .footer-grid{display:flex;justify-content:space-between;gap:30px}
 .footer-brand{font-family:Georgia,serif;font-size:2rem}
@@ -147,5 +137,5 @@ strong{font-weight:700}
 .cta-strip .button{white-space:nowrap}
 @media(max-width:960px){.header-inner{height:72px}.js .menu-toggle{display:flex;width:44px;height:44px;align-items:center;justify-content:center;flex-direction:column;gap:6px;background:none;border:1px solid var(--ink);cursor:pointer}.menu-toggle span{width:19px;height:2px;background:var(--ink)}.site-nav{position:absolute;top:72px;left:0;right:0;background:var(--paper);padding:20px 28px 28px;border-bottom:1px solid var(--line);display:flex;flex-direction:column;align-items:stretch;gap:0;box-shadow:0 18px 30px #1d29251a}.js .site-nav{display:none}.js .site-nav.is-open{display:flex}.site-nav a{padding:11px 0}.site-nav .nav-contact{margin-top:10px;padding:11px 14px}.hero-grid{gap:4%;min-height:0}.three-up{gap:0}.about-hero-grid{gap:5%}.team-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:700px){.container{width:min(calc(100% - 38px),var(--wide))}.hero-grid,.intro-grid,.section-heading,.process-grid,.progress-grid,.people-preview-grid,.contact-grid,.about-hero-grid,.story-grid{grid-template-columns:1fr;gap:28px}.hero-grid{padding:62px 0 45px}.hero h1{font-size:clamp(3.45rem,12vw,5.4rem)}.hero .lead{margin-top:26px}.hero-figure{margin-top:24px}.hero-image-wrap{min-height:0}.hero-image-wrap img{max-height:480px}.hero-bottom{font-size:.61rem}.section{padding:80px 0}.section-label{margin-bottom:8px}.section-heading{margin-bottom:36px}.three-up{grid-template-columns:1fr}.numbered-item,.numbered-item+.numbered-item{padding:25px 0;border-left:0;border-top:1px solid #b7c8bb}.numbered-item h3{margin:20px 0 12px}.process-list{margin-top:10px}.progress-panel{margin-top:10px}.people-stack{padding:30px 0}.contact-card{margin-top:8px}.about-hero{padding:80px 0}.about-intro{margin-top:10px}.cta-strip{display:block}.cta-strip .button{margin-top:28px}.footer-grid{display:block}.footer-links{margin-top:28px}.footer-bottom{display:block}.footer-bottom span{display:block;margin-top:7px}}
-@media(max-width:430px){.actions{gap:22px}.form-row{grid-template-columns:1fr;gap:0}.team-grid{gap:15px}.team-card h3{font-size:1.25rem}.team-card div{padding-top:10px}.hero-figure figcaption{font-size:.54rem}.progress-panel li{grid-template-columns:1fr;gap:4px}.footer-links{flex-wrap:wrap}}
+@media(max-width:430px){.actions{gap:22px}.team-grid{gap:15px}.team-card h3{font-size:1.25rem}.team-card div{padding-top:10px}.hero-figure figcaption{font-size:.54rem}.progress-panel li{grid-template-columns:1fr;gap:4px}.footer-links{flex-wrap:wrap}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.button{transition:none}.button:hover{transform:none}}

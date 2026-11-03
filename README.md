@@ -56,7 +56,7 @@ npm run dev
 
 Open `http://127.0.0.1:4173`. This serves `web/`; edit those source files directly.
 You can also open `web/index.html` for a basic visual preview, but use the local
-server when checking the contact form and HTTP behavior.
+server when checking HTTP behavior.
 
 ```sh
 npm test
@@ -80,42 +80,29 @@ the public contact configuration revalidate so releases and configuration change
 can be picked up promptly. GitHub Pages controls its own HTTP cache headers;
 fingerprinted filenames still provide safe cache invalidation there.
 
-## Contact form and Supabase
+## Contact and Supabase
 
-The form sends JSON to the Supabase Edge Function `contact`. The function
-validates the fields, checks the allowed origin and rate limit, then stores a
-message in a private database table. Service credentials stay in Supabase and
-must never appear in `web/`, `dist/`, GitHub repository variables, or browser code.
+The site currently provides an email link and has **no contact form**. A
+Supabase contact backend is implemented and tested in `supabase/` for possible
+future use, but no Qadam project has been provisioned and no browser sends
+messages to it. The authenticated Supabase account is at its active free-project
+limit, so deployment was deferred.
 
-Follow [the Supabase setup guide](docs/supabase-setup.md) to apply the migration,
-configure server secrets, and deploy the function. Then set one public build
-variable in your hosting provider:
-
-| Variable | Value |
-| --- | --- |
-| `SUPABASE_URL` | Your Supabase project URL, such as `https://PROJECT_REF.supabase.co`. |
-| `CONTACT_ENDPOINT` | Optional complete endpoint URL; takes precedence over `SUPABASE_URL`. |
-
-`SUPABASE_URL` generates `https://PROJECT_REF.supabase.co/functions/v1/contact`.
-Rebuild after changing either variable. These URLs are public configuration;
-neither variable should contain an API key. With no endpoint configured, the
-website provides the project's direct email contact instead of pretending to
-submit a message. Local form tests must use a local or staging backend.
+If the form is brought back later, follow [the Supabase setup guide](docs/supabase-setup.md),
+apply the migration, configure server secrets, deploy the function, and connect
+the frontend. Service credentials must stay out of `web/`, `dist/`, GitHub
+repository variables, and browser code.
 
 ## Deployment
 
 **GitHub Pages:** [the workflow](.github/workflows/pages.yml) builds and publishes
 `dist/` on pushes to `main`. Set **Settings > Pages > Source** to **GitHub
-Actions**. Configure `SUPABASE_URL` or `CONTACT_ENDPOINT` under **Settings >
-Secrets and variables > Actions > Variables**, then run the workflow again.
-Include the actual site's origin in the Supabase function's allowed origins.
+Actions**.
 
 **Vercel:** import this repository. [vercel.json](vercel.json) specifies the build,
-output directory, and cache headers. Set the public contact build variable in
-the Vercel project and redeploy. Add the production site's origin to the
-function's allowed origins; preview origins are not automatically trusted.
+output directory, and cache headers.
 
-GitHub Pages remains a static host. All contact processing runs in Supabase.
+GitHub Pages remains a static host. Contact currently uses email.
 
 ## Repository layout
 
@@ -124,9 +111,9 @@ web/                         Website source and image assets
   index.html                 Semantic content and accessible navigation
   about.html                 Mission and team portraits
   styles.css                 Responsive layout, color, and restrained motion
-  app.js                     Navigation and contact-form behavior
-  config.js                  Safe default public contact configuration
-supabase/                    Database migration and contact Edge Function
+  app.js                     Navigation behavior
+  config.js                  Reserved public contact configuration
+supabase/                    Prepared, undeployed contact backend
 tools/build.mjs              Fingerprinted production build
 tools/serve.mjs              Local source or production preview
 tests/                       Build and behavior checks

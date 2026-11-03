@@ -50,19 +50,11 @@ fingerprinted assets for one year with `immutable`, while HTML and public config
 revalidate. GitHub Pages controls its own cache headers. No service worker is
 installed, so there is no separate offline cache to invalidate.
 
-## Contact configuration
+## Contact
 
-The production build creates public `config.js` using `CONTACT_ENDPOINT`, or
-`SUPABASE_URL` with `/functions/v1/contact` appended. It contains a public URL only;
-never place Supabase service keys or image-generation credentials in it.
-
-The default source configuration has no endpoint. The site exposes a direct
-email contact until a backend is configured, and does not report false success.
-For database migration, Edge Function deployment, allowed origins, and secrets,
-follow [the Supabase setup guide](../docs/supabase-setup.md).
-
-The backend expects `{ name, email, role, message, website }`, with `website`
-reserved as a honeypot. A successful JSON response contains `{ "ok": true }`;
-failures return a human-readable `error`. Form requests must not be cached.
+The site currently offers an email link and has no form. A Supabase contact
+backend is prepared but not deployed; the current browser code does not submit
+to it. If the form returns later, follow [the Supabase setup guide](../docs/supabase-setup.md)
+to configure the database, Edge Function, allowed origins, and private secrets.
 
 See [the main README](../README.md) for hosting setup and project status.
