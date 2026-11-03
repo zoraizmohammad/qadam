@@ -411,15 +411,21 @@ nav.scrolled{background:rgba(244,242,237,.72);backdrop-filter:blur(16px) saturat
 .risk p{font-size:16px;color:var(--ink-dim);}
 
 /* ---------- about ---------- */
+#about{background:#fff;}
 .about-intro{display:grid;grid-template-columns:.8fr 1.2fr;gap:64px;align-items:start;}
 .about-intro .sec-head{margin-bottom:0;}
 .about-copy{font-size:17px;color:var(--ink-2);max-width:64ch;}
 .about-copy p+p{margin-top:18px;}
-.about-team{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:60px;}
-.about-person{overflow:hidden;}
+.about-team-head{margin-top:72px;margin-bottom:30px;}
+.about-team-head h3{font-family:'Inter',system-ui,sans-serif;font-size:clamp(30px,3.5vw,42px);font-weight:400;line-height:1.2;color:#0047c9;}
+.about-team{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:30px;}
+.about-person{min-width:0;}
+.about-photo{position:relative;overflow:hidden;border-radius:16px;background:var(--paper-2);}
 .about-person img{display:block;width:100%;aspect-ratio:1;object-fit:cover;}
-.about-person .person-name{font-family:'Instrument Serif',Georgia,serif;font-size:24px;line-height:1.1;margin-top:15px;}
-.about-person .person-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-dim);margin-top:6px;}
+.about-linkedin{position:absolute;right:12px;bottom:12px;width:36px;height:36px;border-radius:4px;display:grid;place-items:center;background:#fff;color:#0a66c2;font-family:'Inter',system-ui,sans-serif;font-size:22px;font-weight:700;line-height:1;box-shadow:0 2px 9px rgba(0,0,0,.16);}
+.about-linkedin:hover,.about-linkedin:focus-visible{background:#0a66c2;color:#fff;}
+.about-person .person-name{font-family:'Inter',system-ui,sans-serif;font-size:clamp(21px,2vw,27px);font-weight:400;line-height:1.25;margin-top:15px;color:var(--ink);}
+.about-person .person-study{font-size:16px;line-height:1.4;color:var(--ink-2);margin-top:5px;}
 
 /* ---------- get involved (iridescent bookend) ---------- */
 .cta-box{padding:56px;border-radius:28px;}
@@ -1133,11 +1139,24 @@ footer .brand{color:#fff;margin-bottom:18px;}
         <p>We want to explore whether a portable, reusable fitting system can bring more of that care closer to the people who need it. The concept still needs engineering tests and clinical validation. We want clinicians, engineers, and communities to help shape the work and challenge our assumptions.</p>
       </div>
     </div>
+    <div class="about-team-head reveal"><h3>The humans behind it all</h3></div>
     <div class="about-team">
-      <article class="about-person reveal"><img src="assets/people/mohammad-zoraiz.jpg" alt="Mohammad Zoraiz" width="200" height="200" loading="lazy" decoding="async"><h3 class="person-name">Mohammad Zoraiz</h3><p class="person-label">Qadam team</p></article>
-      <article class="about-person reveal d1"><img src="assets/people/hala-kannan.jpg" alt="Hala Kannan" width="800" height="800" loading="lazy" decoding="async"><h3 class="person-name">Hala Kannan</h3><p class="person-label">Qadam team</p></article>
-      <article class="about-person reveal d2"><img src="assets/people/jad-bargouti.png" alt="Jad Bargouti" width="800" height="800" loading="lazy" decoding="async"><h3 class="person-name">Jad Bargouti</h3><p class="person-label">Qadam team</p></article>
-      <article class="about-person reveal d3"><img src="assets/people/nizar-alsaidi.jpg" alt="Nizar Alsaidi" width="800" height="800" loading="lazy" decoding="async"><h3 class="person-name">Nizar Alsaidi</h3><p class="person-label">Qadam team</p></article>
+      <article class="about-person reveal">
+        <div class="about-photo"><img src="assets/people/mohammad-zoraiz.jpg" alt="Mohammad Zoraiz" width="200" height="200" loading="lazy" decoding="async"><a class="about-linkedin" href="https://www.linkedin.com/in/mohammad-zoraiz/" target="_blank" rel="noopener noreferrer" aria-label="Mohammad Zoraiz on LinkedIn">in</a></div>
+        <h4 class="person-name">Mohammad Zoraiz</h4><p class="person-study">ECE, Physics, CS</p>
+      </article>
+      <article class="about-person reveal d1">
+        <div class="about-photo"><img src="assets/people/hala-kannan.jpg" alt="Hala Kannan" width="800" height="800" loading="lazy" decoding="async"><a class="about-linkedin" href="https://www.linkedin.com/in/halakanaan/" target="_blank" rel="noopener noreferrer" aria-label="Hala Kannan on LinkedIn">in</a></div>
+        <h4 class="person-name">Hala Kannan</h4><p class="person-study">BME</p>
+      </article>
+      <article class="about-person reveal d2">
+        <div class="about-photo"><img src="assets/people/nizar-alsaidi.jpg" alt="Nizar Alsaidi" width="800" height="800" loading="lazy" decoding="async"><a class="about-linkedin" href="https://www.linkedin.com/in/nizar-alsaidi-670a9b372" target="_blank" rel="noopener noreferrer" aria-label="Nizar Alsaidi on LinkedIn">in</a></div>
+        <h4 class="person-name">Nizar Alsaidi</h4><p class="person-study">MechE + Physics</p>
+      </article>
+      <article class="about-person reveal d3">
+        <div class="about-photo"><img src="assets/people/jad-barghouti.png" alt="Jad Barghouti" width="800" height="800" loading="lazy" decoding="async"><a class="about-linkedin" href="https://www.linkedin.com/in/jad-barghouti-a9299030b/" target="_blank" rel="noopener noreferrer" aria-label="Jad Barghouti on LinkedIn">in</a></div>
+        <h4 class="person-name">Jad Barghouti</h4><p class="person-study">Neuroscience + CS</p>
+      </article>
     </div>
   </div>
 </section>

@@ -48,8 +48,8 @@ disabled automatically for visitors who set `prefers-reduced-motion`.
 - `favicon.svg` — the Qadam mark (scalable, pastel iridescent), wired via `<link rel="icon">`.
 - `og-image.png` — 1200×630 social card (pastel iridescent, serif headline) used by
   the Open Graph / Twitter meta tags.
-- `people/` — portraits of Mohammad Zoraiz, Hala Kannan, Jad Bargouti, and
-  Nizar Alsaidi supplied for the About section.
+- `people/` — portraits of Mohammad Zoraiz, Hala Kannan, Nizar Alsaidi, and
+  Jad Barghouti supplied for the About section.
 
 Both are referenced with relative paths so they work on GitHub Pages under a
 project subpath. The iridescent fields are pure CSS (no extra files).

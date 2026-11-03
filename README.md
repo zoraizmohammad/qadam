@@ -139,7 +139,8 @@ which publishes the `/web` folder to GitHub Pages. One-time setup: in the repo's
 repository. There is no contact form or database connection.
 
 **About:** the page includes the motivation for Qadam and portraits of Mohammad
-Zoraiz, Hala Kannan, Jad Bargouti, and Nizar Alsaidi.
+Zoraiz, Hala Kannan, Nizar Alsaidi, and Jad Barghouti, with links to their
+LinkedIn profiles and fields of study.
 
 **Imagery:** the on-brand image and diagram plan — including copy-paste generation
 prompts and the scroll-driven exploded-view sequences — is documented in
