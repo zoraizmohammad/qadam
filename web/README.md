@@ -36,7 +36,7 @@ Sections: hero (iridescent), a stats proof band, thesis, **"What's in the case"*
 (iridescent — the carrying-case kit broken into reusable fitting tech, per-patient
 consumables, and power/logistics), the device (dark), the fitting loop, research
 agenda (dark bento), an interactive V1/V2/V3 roadmap, open source (dark terminal),
-a candid "known risks" callout, an About section with the four team portraits,
+an About section with the four team portraits,
 and get-involved (iridescent bookend). The nav and
 footer both carry a GitHub icon linking the repo. Animations: a slowly drifting
 iridescent gradient, a self-animating SVG of the stave former, scroll-reveal
