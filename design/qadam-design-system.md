@@ -1,92 +1,140 @@
-# Qadam website design system
+# Qadam — design system breakdown
 
-The website is a clear introduction to an early research project. Its design
-should help visitors understand the proposal, assess its current stage, and find
-the actual work. It should not imply a mature clinical product.
+A reference for the design language used in `web/index.html`, so it can be
+extended consistently. The site is intentionally a **single file with no build
+step, no framework, and no runtime dependencies** — all HTML, CSS, and JS live in
+`web/index.html`. The only external resource is Google Fonts (with graceful
+offline fallback to system fonts).
 
-## Visual direction
+---
 
-Use a warm paper background, dark ink text, and a restrained teal accent. Prefer
-plain surfaces, fine dividers, and generous but purposeful spacing. Establish a
-visual hierarchy through typography and layout before adding decoration.
+## 1. Aesthetic direction
 
-Avoid decorative gradient fields, glass panels, glow effects, a moving marquee,
-count-up statistics, pulsing markers, fake terminals, and a floating duplicate
-contact button. These effects compete with the subject and add motion without
-explaining it.
+**Dark "frontier lab."** The reference points are deep-tech / research-lab sites
+(SpaceX, OpenAI, Boston Dynamics): near-black backgrounds, a single luminous
+accent, restrained motion, and typography that feels engineered. The goal is
+credibility + ambition without looking like a clinical brochure.
 
-## Typography and readability
+---
 
-- Use Georgia for display and section headings, with a serif fallback.
-- Use the operating system's sans-serif font for body text, controls, and labels.
-- Do not request remote fonts; text should render immediately and remain usable
-  on a limited connection.
-- Keep paragraphs to a readable line length and use a small, consistent type scale.
-- Give supporting text sufficient contrast. Faint text is not a substitute for
-  hierarchy, especially for status, labels, and image captions.
-- Make link purpose clear from its text and keep keyboard focus visible.
+## 2. Color palette
 
-The exact colors, spacing, and responsive rules are defined in `web/styles.css`.
-Treat that file as the source of truth for implementation tokens.
+All colors are CSS custom properties declared in `:root`.
 
-## Page structure
+| Token | Hex | Role |
+|---|---|---|
+| `--bg` | `#05070d` | Page background (near-black, slightly blue) |
+| `--bg-2` | `#080b14` | Secondary background / insets |
+| `--panel` | `#0c111d` | Card / panel surface |
+| `--line` | `#1b2436` | Borders, dividers, hairlines |
+| `--txt` | `#e8edf7` | Primary text |
+| `--txt-dim` | `#9aa6bd` | Secondary / body text |
+| `--txt-faint` | `#5d6982` | Labels, captions, muted |
+| `--accent` | `#39f5c8` | **Signal teal** — primary accent, glow, CTAs |
+| `--accent-2` | `#5b8cff` | Deep blue — secondary accent, links in motion |
+| `--accent-3` | `#b07bff` | Violet — tertiary accent, gradient endpoint |
+| `--warn` | `#ffcf6b` | Amber — "needs power" / risk callouts |
 
-1. A concise headline and explanation, development-stage label, concept image,
-   and primary route into the project.
-2. The proposed kit, separated into reusable tools, per-person parts, and power.
-3. The proposed workflow in four readable steps.
-4. Current work, planned milestones, and the most important open questions.
-5. A route to the About page and the four people behind Qadam.
-6. A working contact route and links to the real repository and documentation.
+**Usage rules**
+- One dominant accent (teal). Blue and violet appear mostly in gradients and
+  hover/motion states, never as competing primary CTAs.
+- Amber is reserved for honesty/risk signals (the "needs power" badge, the known-
+  risks callout). Don't use it decoratively.
+- Text uses a 3-step hierarchy (`--txt` → `--txt-dim` → `--txt-faint`) — almost
+  never pure white, never pure gray.
 
-Keep detailed engineering arguments in the research documents. Avoid repeating
-the same thesis across several equally prominent sections.
+**Signature gradient:** `linear-gradient(110deg, --accent, --accent-2 55%, --accent-3)`
+used for the hero word, headings-as-accent, and the scroll-progress bar.
 
-## Imagery and evidence
+---
 
-Visible captions must identify concept renders as concepts. A generated pressure
-illustration is not measured pressure data. Measured results should link to their
-method, units, and source files; never add simulated terminal output that appears
-to report a successful test.
+## 3. Typography
 
-Prefer documented CAD, annotated sketches, real bench photographs, and measured
-results when they exist. Use consistent viewpoints if a comparison requires two
-images. Do not crossfade unrelated renders to imitate an unpacking animation.
+Three families loaded from Google Fonts:
 
-Set intrinsic image dimensions, choose an efficient file format, and load images
-below the first viewport lazily where appropriate. Keep alt text useful without
-duplicating an entire caption.
+| Family | Use | Weights |
+|---|---|---|
+| **Space Grotesk** | Headings, brand, buttons, numeric stats | 400–700 |
+| **Inter** | Body copy, form inputs | 300–600 |
+| **JetBrains Mono** | Eyebrows, section tags, labels, code/terminal | 400–500 |
 
-## Interaction and accessibility
+- Body weight is **300** (light) for an airy, technical feel; emphasis via
+  `--txt` color + weight 500, not bold-everywhere.
+- Headings use tight tracking (`letter-spacing:-.02em`) and `line-height:1.1`.
+- "Eyebrow" labels are mono, uppercase, `letter-spacing:.12–.14em`, accent-colored.
+- Fluid sizing via `clamp()` — e.g. hero `clamp(40px,7vw,82px)`, H2 `clamp(30px,4.5vw,50px)`.
 
-- Keep essential content visible before JavaScript runs.
-- Give small screens an accessible navigation route rather than hiding links.
-- Use native links, buttons, form controls, and disclosure elements where useful.
-- Ensure all interactive behavior works with a keyboard and touch; do not rely
-  on hover to expose essential information.
-- Honor `prefers-reduced-motion`. Keep other transitions brief and purposeful.
-- Avoid automatic animations that compete with a control while someone uses it.
-- Associate form labels and status messages with the correct controls, preserve
-  entered values on failure, and report success only after the backend accepts
-  the message.
+---
 
-## Implementation and delivery
+## 4. Layout & spacing
 
-Source stays in `web/index.html`, `web/about.html`, `web/styles.css`,
-`web/app.js`, and `web/config.js`. The Node build produces a separate `dist/` folder with content
-fingerprints in local asset filenames. There is no frontend framework, remote
-font dependency, or service worker.
+- Container: `.wrap`, `max-width:1180px`, `padding:0 28px`, centered.
+- Section rhythm: `padding:120px 0` (→ `80px` on mobile).
+- Section header pattern `.sec-head`: mono accent tag (with a leading hairline) →
+  large H2 → dim intro paragraph, capped at `max-width:760px`.
+- Grids: device & thesis use 2-col; research uses 3-col; loop uses 4-col; roles
+  use 4-col. All collapse predictably at `920px` then `600px`.
+- Radii: cards `14–20px`, inputs/buttons `9–11px`, pills `20–30px`.
 
-Cache fingerprinted files for a long time on hosts that support custom headers.
-HTML and public backend configuration should revalidate. Never cache contact
-submissions. See the root README for deployment and Supabase setup.
+---
 
-## Editorial rules
+## 5. Components
 
-Describe the kit as proposed or in development until validation demonstrates
-otherwise. Separate project intentions from published assets and finished work.
-Label targets next to the associated claim, cite external figures, and identify
-who is responsible for the project. Prefer concrete language over pitch phrases.
+- **Buttons** `.btn` — `.btn-primary` (solid teal, glow shadow, lifts on hover);
+  `.btn-ghost` (transparent, teal border on hover).
+- **Cards** — panel gradient `linear-gradient(160–170deg, --panel, #070a12)`, 1px
+  `--line` border, hover lifts `translateY(-4..6px)` + accent border.
+- **Eyebrow / section tag** — mono uppercase accent label.
+- **Pills / badges** — small mono chips; green = off-grid/ok, amber = needs power.
+- **Stat block** — gradient numeric (Space Grotesk 700) + faint caption; animated
+  count-up on scroll.
+- **Form fields** — dark inset `rgba(8,11,20,.7)`, `--line` border, teal focus ring
+  `box-shadow:0 0 0 3px rgba(57,245,200,.12)`; custom SVG select chevron.
+- **Terminal mock** — `#06080f` panel, traffic-light dots, mono body with colored
+  tokens mapped to the accent palette.
 
-Earlier image briefs and inspiration notes are historical reference material;
-they are not instructions to restore the previous gradient-heavy design.
+---
+
+## 6. Motion & interaction
+
+| Effect | How |
+|---|---|
+| Scroll progress bar | top gradient bar scaled by scroll fraction |
+| Sticky nav | blurs + condenses after 40px scroll (`.scrolled`) |
+| Scroll-reveal | `IntersectionObserver` adds `.in` → opacity+translateY; staggered via `.d1–.d6` delays |
+| Count-up stats | cubic ease-out, triggered once on 50% visibility |
+| Hero background | `<canvas>` particle/network field, mouse-reactive links |
+| Device diagram | self-animating SVG: staves bulge in/out via animated quadratic control points |
+| Roadmap | tabbed panels (V1/V2/V3), fade-in on switch |
+| Marquee | infinite horizontal scroll of principles, masked at edges |
+| Scanline / grain | CSS gradient scanline overlay + SVG fractal-noise texture |
+
+**Easing standard:** `--ease: cubic-bezier(.16,1,.3,1)` everywhere for a smooth,
+"settled" feel. Durations 0.3s (UI) to 0.9s (reveals).
+
+Respect users: heavy motion is decorative and never blocks content. (A future
+improvement: honor `prefers-reduced-motion` — see backlog below.)
+
+---
+
+## 7. "Frontend & backend" architecture
+
+- **Frontend:** 100% static, single HTML file. No React/Vue/bundler. This is a
+  deliberate choice — trivially forkable, hostable anywhere, and aligned with the
+  project's "dumb, unbreakable" ethos.
+- **Backend:** none required. The one dynamic piece is the **get-involved form**,
+  which POSTs to a third-party form endpoint (Formspree) via `fetch()`. This keeps
+  the site fully static/serverless while still capturing real submissions.
+- **Hosting:** GitHub Pages via `.github/workflows/pages.yml`, which publishes the
+  `/web` folder on every push to `main`.
+
+---
+
+## 8. Backlog / opportunities
+
+- Add `@media (prefers-reduced-motion: reduce)` to disable canvas + reveals.
+- Replace provisional stats/cost numbers with cited figures.
+- Optional: self-host fonts for full offline + privacy.
+- Optional smooth-scroll inertia (Lenis) and section-pinned scroll storytelling
+  (GSAP ScrollTrigger) — see `inspiration/nucleoresearch.md` for the influence.
+- Add OpenGraph/Twitter card meta + a favicon/social image.

@@ -1,68 +1,116 @@
-# Optional concept-image tooling
+# Nano-Banana MCP — image generation for Qadam
 
-The website build does not generate images or call an AI provider. Existing
-concept renders are stored in `web/assets/` and must be visibly labeled as
-illustrations when used. Prefer actual CAD, prototype photographs, and measured
-results when those become available.
+[Nano-Banana](https://github.com/ConechoAI/Nano-Banana-MCP) is an MCP server that
+wraps Google's **Gemini 2.5 Flash Image** API so an AI client (Claude Code / Cowork,
+Cursor, etc.) can generate and edit raster images from text prompts. We use it to
+produce on-brand hero/illustration assets for the website.
 
-## Legacy Python generator
+> **Why this is a "run it on your machine" step.** The build/automation sandbox this
+> repo was assembled in has **no outbound network** to npm or the Gemini API, so the
+> server can't run there. It runs fine locally, where your machine has normal
+> internet. The procedural assets already in `web/assets/` (favicon, OG image) and
+> the inline SVG hero art were built without it; Nano-Banana is for *additional*
+> photographic/painterly assets you may want later.
 
-`tools/generate-images.py` is an optional maintenance script for the existing
-Imagen prompt pack. It uses Python's standard library and reads its credential
-from the `GEMINI_API_KEY` environment variable. It exits with an actionable
-message and a nonzero status before making requests when the variable is absent.
+---
 
-Set a fresh key in your current shell, then run the script from the repo root:
+## 1. Get a Gemini API key
 
-```sh
-export GEMINI_API_KEY="your-fresh-key"
-python tools/generate-images.py
+1. Go to **Google AI Studio** → <https://aistudio.google.com/app/apikey>.
+2. Create an API key and copy it.
+
+> **Security:** treat the key like a password. Never paste it into chat, commit it,
+> or put it in `mcp.example.json`. If a key is ever exposed, **delete it** in AI
+> Studio and create a new one. This repo's `.gitignore` already excludes
+> `.env*`, `*.key`, `mcp.local.json`, and `.nano-banana-config.json`.
+
+Recommended: put the key in your shell profile instead of any file:
+
+```bash
+export GEMINI_API_KEY="your-new-key-here"
 ```
 
-In PowerShell, the equivalent assignment is:
+## 2. Configure your MCP client
 
-```powershell
-$env:GEMINI_API_KEY = "your-fresh-key"
-python tools/generate-images.py
+The server is published on npm and runs via `npx` (Node 18+ required) — no install
+step needed.
+
+**Claude Code (`~/.claude.json` or project `.mcp.json`):**
+
+```jsonc
+{
+  "mcpServers": {
+    "nano-banana": {
+      "command": "npx",
+      "args": ["nano-banana-mcp"],
+      "env": { "GEMINI_API_KEY": "your-key-here" }
+    }
+  }
+}
 ```
 
-An optional filename or label filter limits generation:
+If you already exported `GEMINI_API_KEY` in your shell (step 1), you can drop the
+`env` block entirely — the server reads the system environment variable.
 
-```sh
-python tools/generate-images.py case
+A copyable template lives next to this file: **`mcp.example.json`**. To keep a
+local copy *with* your key that git ignores:
+
+```bash
+cp tools/nano-banana/mcp.example.json tools/nano-banana/mcp.local.json
+# then edit mcp.local.json and paste your key (this file is gitignored)
 ```
 
-Image generation makes external API requests and may incur provider charges.
-It is separate from `npm run build` and is not part of deployment. The script's
-model and original prompts are legacy tooling; check current provider support
-before starting a new generation session. Generating the entire pack can create
-unused files and is unnecessary for ordinary website edits.
+**Cursor / other MCP clients:** same block, under that client's MCP settings. See
+the upstream README for client-specific paths.
 
-## Credentials
+## 3. Tools the server exposes
 
-Never commit a real key to this folder, `mcp.example.json`, website source,
-configuration, or generated build output. Local environment files and
-`mcp.local.json` are ignored by Git. The script authenticates through a request
-header rather than a URL query parameter and redacts the loaded key from error
-messages.
+| Tool | Use |
+|---|---|
+| `generate_image({ prompt })` | Create a new image from text. |
+| `edit_image({ imagePath, prompt, referenceImages? })` | Edit an existing file. |
+| `continue_editing({ prompt })` | Iterate on the last image. |
+| `get_last_image_info()` | Info on the most recent output. |
+| `configure_gemini_token({ apiKey })` | Set the key via tool (writes a local config). |
+| `get_configuration_status()` | Check whether a key is loaded. |
 
-A previously committed credential must be revoked in its provider's console.
-Deleting it from the latest source does not revoke it or remove it from Git
-history. Create a replacement only after revocation and keep it in the local
-environment or a suitable secret store.
+Output is saved to `./generated_imgs/` on macOS/Linux (this folder is gitignored).
+Move/rename finals into `web/assets/` when you're happy with them, then wire them in.
 
-## MCP reference
+---
 
-`mcp.example.json` is a historical template for the third-party
-[Nano-Banana MCP server](https://github.com/ConechoAI/Nano-Banana-MCP). This repo
-does not install, require, or configure that server. Consult its current upstream
-documentation before using it. Keep any local configuration containing credentials
-in the ignored `mcp.local.json` file.
+## 4. Qadam art-direction prompt pack
 
-## Art direction
+Use these to keep generated assets consistent with the site's **mystical bio-tech**
+language (palette: teal `#39f5c8` → blue `#5b8cff` → violet `#b07bff` on near-black
+`#05070d`). Keep generated raster art behind the existing text — never let it fight
+legibility, and prefer dark, low-clutter compositions.
 
-Follow [the current website design system](../../design/qadam-design-system.md):
-warm paper, readable dark text, restrained teal, and documentary clarity. Keep
-product concepts visually distinct from evidence. Avoid decorative glow, invented
-medical readouts, illegible labels, and images that imply clinical validation.
-Optimize final web assets and retain useful captions and alt text.
+**Hero background (abstract "living material"):**
+> Abstract iridescent holographic material on a near-black background (#05070d),
+> soft mother-of-pearl gradient in signal-teal, deep blue and violet, slow flowing
+> energy, subtle film grain, volumetric soft glow, no text, no logos, ultra-clean,
+> cinematic, high-tech research-lab aesthetic, 16:9.
+
+**Limb-scan / socket motif (illustration):**
+> Stylized 3D scan of a human residual limb cross-section rendered as glowing
+> topographic contour lines and point-cloud landmarks, teal-to-violet gradient
+> wireframe, dark background, scientific-visualization look, soft depth of field,
+> no text, minimal, elegant.
+
+**Device beauty shot (the reconfigurable former):**
+> A futuristic modular medical device: a ring of slim vertical staves around a soft
+> membrane forming a socket mold, matte dark materials with teal edge-lighting,
+> studio product photography on near-black seamless, dramatic rim light, shallow
+> depth of field, clean, premium, no text.
+
+**Texture / overlay:**
+> Seamless subtle holographic noise texture, faint teal-blue-violet iridescence on
+> black, very low contrast, tileable, for use as a soft overlay.
+
+**Tips**
+- Add `no text, no watermark, no logo` to avoid garbled lettering.
+- Generate large, then downscale; export PNG for UI, and keep file sizes small.
+- Run an `edit_image` pass with the site's color note to nudge stray palettes back
+  toward the teal-led triad.
+- For the hero, dark + low-detail wins — the headline must stay readable on top.

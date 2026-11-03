@@ -1,8 +1,0 @@
-project_id = "qadam"
-
-# Contact is intentionally public. The function validates requests, restricts
-# browser origins, and applies a database-backed rate limit before accepting mail.
-[functions.contact]
-enabled = true
-verify_jwt = false
-entrypoint = "./functions/contact/index.ts"
