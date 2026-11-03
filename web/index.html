@@ -420,8 +420,8 @@ nav.scrolled{background:rgba(244,242,237,.72);backdrop-filter:blur(16px) saturat
 .about-team-head h3{font-family:'Inter',system-ui,sans-serif;font-size:clamp(30px,3.5vw,42px);font-weight:400;line-height:1.2;color:#0047c9;}
 .about-team{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:30px;}
 .about-person{min-width:0;}
-.about-photo{position:relative;overflow:hidden;border-radius:16px;background:var(--paper-2);}
-.about-person img{display:block;width:100%;aspect-ratio:1;object-fit:cover;}
+.about-photo{position:relative;width:200px;max-width:100%;aspect-ratio:1;overflow:hidden;border-radius:16px;background:var(--paper-2);}
+.about-person img{position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:cover;}
 .about-linkedin{position:absolute;right:12px;bottom:12px;width:36px;height:36px;border-radius:4px;display:grid;place-items:center;background:#fff;color:#0a66c2;font-family:'Inter',system-ui,sans-serif;font-size:22px;font-weight:700;line-height:1;box-shadow:0 2px 9px rgba(0,0,0,.16);}
 .about-linkedin:hover,.about-linkedin:focus-visible{background:#0a66c2;color:#fff;}
 .about-person .person-name{font-family:'Inter',system-ui,sans-serif;font-size:clamp(21px,2vw,27px);font-weight:400;line-height:1.25;margin-top:15px;color:var(--ink);}
