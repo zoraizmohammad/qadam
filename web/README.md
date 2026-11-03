@@ -1,64 +1,68 @@
-# Qadam — website
+# Qadam website
 
-A single-file, dependency-free landing page for the Qadam project.
+A small static site explaining Qadam's proposed portable prosthetics fitting kit,
+current research stage, and ways to contribute.
 
-Qadam is an **accessible biotech venture** that packs an entire prosthetics clinic
-into one portable, solar-powered case — the phone, tools, and standardized parts to
-custom-fit **15–20 robust mechanical limbs** anywhere, plus the open IP to make more.
-The intelligence lives in the *fitting*; the limb the patient keeps is purely
-mechanical (no electronics, no battery, nothing to break).
+## Local development
 
-Repo: <https://github.com/zoraizmohammad/qadam>
+From the repository root, with Node.js 22 or later:
 
-## Run it
-
-Open `index.html` in any modern browser. There is no build step and no install.
-
-```
-open index.html        # macOS
-xdg-open index.html    # Linux
-start index.html       # Windows
+```sh
+npm run dev
 ```
 
-## What's inside
+Open `http://127.0.0.1:4173`. Source lives in `index.html`, `about.html`,
+`styles.css`, `app.js`, `config.js`, and `assets/`. No frontend framework or
+font download is required.
+The main content remains readable without JavaScript.
 
-Everything (HTML, CSS, JS) lives in `index.html`. External fonts load from Google
-Fonts when online; the page degrades gracefully offline.
+```sh
+npm test
+npm run build
+npm run preview
+```
 
-Design: an editorial, light-led aesthetic inspired by nucleoresearch.com — a warm
-off-white base with a sectional rhythm of **iridescent → white → black** sections,
-bookended by a soft pastel iridescent hero and contact band. Type pairs Instrument
-Serif (display) with Inter (body) and JetBrains Mono (labels); buttons are pills,
-cards are glassmorphic, and a persistent floating "Get involved" CTA appears on
-scroll.
+The build writes `dist/`. Deploy that folder, not the repository root.
 
-Sections: hero (iridescent), a stats proof band, thesis, **"What's in the case"**
-(iridescent — the carrying-case kit broken into reusable fitting tech, per-patient
-consumables, and power/logistics), the device (dark), the fitting loop, research
-agenda (dark bento), an interactive V1/V2/V3 roadmap, open source (dark terminal),
-a candid "known risks" callout, and get-involved (iridescent bookend). The nav and
-footer both carry a GitHub icon linking the repo. Animations: a slowly drifting
-iridescent gradient, a self-animating SVG of the stave former, scroll-reveal
-transitions, count-up stats, and tabbed roadmap panels. All decorative motion is
-disabled automatically for visitors who set `prefers-reduced-motion`.
+## Content and design
 
-> The previous dark theme is preserved at `index.dark-backup.html`
-> (untracked) in case you want to compare or revert.
+The home page presents the proposal, fitting workflow, current stage, open
+research questions, and contact route. The About page explains the motivation
+and introduces Mohammad Zoraiz, Hala Kannan, Jad Bargouti, and Nizar Alsaidi
+with the supplied portraits. Product imagery is labeled as a concept
+illustration. Do not describe capacity, cost, accuracy, or clinical results
+as proven without linking to supporting work.
 
-### `assets/`
+The visual system uses a warm paper background, dark readable text, Georgia
+headings, system sans-serif body text, and a restrained teal accent. Navigation
+works on small screens. Content does not wait for a scroll animation to become
+visible. See [the design system](../design/qadam-design-system.md).
 
-- `favicon.svg` — the Qadam mark (scalable, pastel iridescent), wired via `<link rel="icon">`.
-- `og-image.png` — 1200×630 social card (pastel iridescent, serif headline) used by
-  the Open Graph / Twitter meta tags.
+## Assets and caching
 
-Both are referenced with relative paths so they work on GitHub Pages under a
-project subpath. The iridescent fields are pure CSS (no extra files).
-To generate *additional* AI raster art on-brand, see
-[`../tools/nano-banana/`](../tools/nano-banana/README.md).
+Use explicit image dimensions to reserve layout space and efficient image
+formats for content imagery. Keep alt text descriptive and label concept imagery
+in visible captions. Link to actual project files instead of simulated outputs.
 
-## Notes
+The build fingerprints asset filenames by content and rewrites their references,
+including relative paths needed by GitHub Pages project sites. Vercel caches
+fingerprinted assets for one year with `immutable`, while HTML and public config
+revalidate. GitHub Pages controls its own cache headers. No service worker is
+installed, so there is no separate offline cache to invalidate.
 
-- The stat figures and cost targets in the hero/open-source sections are
-  **provisional placeholders** — update them as real numbers land.
-- No frameworks, no bundler, no `node_modules`. Intentionally easy to fork and host
-  anywhere (GitHub Pages, Netlify, a static folder).
+## Contact configuration
+
+The production build creates public `config.js` using `CONTACT_ENDPOINT`, or
+`SUPABASE_URL` with `/functions/v1/contact` appended. It contains a public URL only;
+never place Supabase service keys or image-generation credentials in it.
+
+The default source configuration has no endpoint. The site exposes a direct
+email contact until a backend is configured, and does not report false success.
+For database migration, Edge Function deployment, allowed origins, and secrets,
+follow [the Supabase setup guide](../docs/supabase-setup.md).
+
+The backend expects `{ name, email, role, message, website }`, with `website`
+reserved as a honeypot. A successful JSON response contains `{ "ok": true }`;
+failures return a human-readable `error`. Form requests must not be cached.
+
+See [the main README](../README.md) for hosting setup and project status.

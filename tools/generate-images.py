@@ -12,7 +12,7 @@ import time
 import urllib.request
 import urllib.error
 
-API_KEY = "AQ.Ab8RN6KwARLDO71S216Te-Y0uT35X9_HyPxWHgGDI5ojX4NPDw"
+API_KEY = os.environ.get("GEMINI_API_KEY", "").strip()
 MODEL = "imagen-4.0-generate-001"
 BASE_URL = f"https://generativelanguage.googleapis.com/v1beta/models/{MODEL}:predict"
 ASSETS = os.path.join(os.path.dirname(__file__), "..", "web", "assets")
@@ -234,6 +234,8 @@ IMAGES = [
 
 
 def generate_image(prompt: str, aspect_ratio: str, output_path: str, label: str) -> bool:
+    if not API_KEY:
+        raise RuntimeError("Set GEMINI_API_KEY in your environment before generating images.")
     full_prompt = f"{prompt}\n\n{STYLE_ANCHOR}"
 
     payload = json.dumps({
@@ -246,9 +248,9 @@ def generate_image(prompt: str, aspect_ratio: str, output_path: str, label: str)
     }).encode("utf-8")
 
     req = urllib.request.Request(
-        f"{BASE_URL}?key={API_KEY}",
+        BASE_URL,
         data=payload,
-        headers={"Content-Type": "application/json"},
+        headers={"Content-Type": "application/json", "x-goog-api-key": API_KEY},
         method="POST",
     )
 
@@ -257,15 +259,15 @@ def generate_image(prompt: str, aspect_ratio: str, output_path: str, label: str)
             result = json.loads(resp.read())
     except urllib.error.HTTPError as e:
         body = e.read().decode("utf-8", errors="replace")
-        print(f"  ✗ HTTP {e.code}: {body[:300]}")
+        print(f"  ✗ HTTP {e.code}: {body.replace(API_KEY, '[redacted]')[:300]}")
         return False
     except Exception as e:
-        print(f"  ✗ Error: {e}")
+        print(f"  ✗ Error: {str(e).replace(API_KEY, '[redacted]')}")
         return False
 
     predictions = result.get("predictions", [])
     if not predictions:
-        print(f"  ✗ No predictions in response: {json.dumps(result)[:300]}")
+        print(f"  ✗ No predictions in response: {json.dumps(result).replace(API_KEY, '[redacted]')[:300]}")
         return False
 
     img_b64 = predictions[0].get("bytesBase64Encoded", "")
@@ -283,6 +285,10 @@ def generate_image(prompt: str, aspect_ratio: str, output_path: str, label: str)
 
 
 def main():
+    if not API_KEY:
+        print("Set GEMINI_API_KEY in your environment before generating images.", file=sys.stderr)
+        return 1
+
     target = sys.argv[1] if len(sys.argv) > 1 else None
 
     print(f"Qadam image generation — model: {MODEL}")
@@ -309,7 +315,8 @@ def main():
             time.sleep(2)  # brief pause between requests
 
     print(f"\nDone — {success} generated, {fail} failed.")
+    return 1 if fail else 0
 
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())
